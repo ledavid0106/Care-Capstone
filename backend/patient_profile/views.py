@@ -32,3 +32,14 @@ def add_patient_profile(request):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data, status = status.HTTP_201_CREATED)
+
+
+@api_view(["PUT"])
+@permission_classes([IsAuthenticated])
+def edit_patient_profile(request, patient_id): 
+    patient = get_object_or_404(Patient, id=patient_id)
+    if request.method == 'PUT':
+        serializer = PatientSerializer(patient, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
