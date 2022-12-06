@@ -10,6 +10,8 @@ const RegisterPage = () => {
     password: "",
     firstName: "",
     lastName: "",
+    is_Pharmacist: "",
+    is_Technician: "",
   };
   const [formData, handleInputChange, handleSubmit] = useCustomForm(
     defaultValues,
@@ -64,6 +66,25 @@ const RegisterPage = () => {
             onChange={handleInputChange}
           />
         </label>
+        <label>
+          Are you a Pharmacist?:{" "}
+          <input
+            type="checkbox"
+            name="is_Pharmacist"
+            value={formData.is_Pharmacist}
+            onChange={handleInputChange}
+          />
+        </label>
+        <label>
+          Are you a Technician?:{" "}
+          <input
+            type="checkbox"
+            name="is_Technician"
+            value={formData.is_Technician}
+            onChange={handleInputChange}
+          />
+        </label>
+
         <p style={{ fontSize: "12px" }}>
           NOTE: Make this an uncommon password with characters, numbers, and
           special characters!
