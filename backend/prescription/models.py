@@ -6,7 +6,7 @@ import uuid
 class Prescription(models.Model):
     id = models.IntegerField(default=uuid.uuid4, primary_key=True)
     active = models.BooleanField()
-    patient_id = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, )
     patient_first_name = models.CharField(max_length=255)
     patient_middle_name = models.CharField(max_length=255)
     patient_last_name = models.CharField(max_length=255)

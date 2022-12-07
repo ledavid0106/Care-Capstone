@@ -4,7 +4,7 @@ from .models import Prescription
 class PrescriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Prescription
-        fields = ['id', 'active', 'patient_id', 'patient_first_name',
+        fields = ['id', 'active', 'patient_id','patient', 'patient_first_name',
             'patient_middle_name', 'patient_last_name', 'patient_dob',
             'generic_name', 'ndc', 'dosage', 'vessel', 'volume', 'lot_number',
             'expiration', 'sig', 'frequency', 'route', 
@@ -12,5 +12,6 @@ class PrescriptionSerializer(serializers.ModelSerializer):
             'indication',
           ]
         depth = 1
+    patient_id = serializers.IntegerField(write_only=True)
 
         

@@ -7,7 +7,6 @@ from .models import Prescription
 from rest_framework import status
 from .serializers import PrescriptionSerializer
 
-
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def get_all_prescription(request):
