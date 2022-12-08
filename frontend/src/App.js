@@ -1,9 +1,9 @@
 // General Imports
 import { Routes, Route } from "react-router-dom";
-import "./App.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/css/bootstrap.css';
 
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "./App.css";
 // Pages Imports
 import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
@@ -15,10 +15,12 @@ import Footer from "./components/Footer/Footer";
 
 // Util Imports
 import PrivateRoute from "./utils/PrivateRoute";
+import { Button } from "react-bootstrap";
 
 function App() {
   return (
     <div>
+      <Button>hello</Button>
       <Navbar />
       <Routes>
         <Route
