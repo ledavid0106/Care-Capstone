@@ -8,14 +8,14 @@ const Navbar = () => {
   const { logoutUser, user } = useContext(AuthContext);
   const navigate = useNavigate();
   return (
-    <div className="navbar sticky-top">
+    <div className="navbar bg-dark sticky-top">
       <ul>
-        <li className="brand">
+        <li className="navbar-brand mr-auto mt-2 mt-lg-0">
           <Link to="/" style={{ textDecoration: "none", color: "white" }}>
             <b>Care Capstone</b>
           </Link>
         </li>
-        <li>
+        <li className="">
           {user ? (
             <button onClick={logoutUser}>Logout</button>
           ) : (
