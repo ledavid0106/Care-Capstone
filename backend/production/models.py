@@ -6,9 +6,9 @@ from medication.models import Medication
 
 # Create your models here.
 class Production(models.Model):
-    patient_id = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    prescription_id = models.ForeignKey(Prescription, on_delete=models.CASCADE)
-    medication_id = models.ForeignKey(Medication, on_delete=models.CASCADE)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    prescription = models.ForeignKey(Prescription, on_delete=models.CASCADE)
+    medication = models.ForeignKey(Medication, on_delete=models.CASCADE)
     patient_last_name = models.CharField(max_length=255)
     patient_dob = models.DateField(max_length=8)
     prescription_generic_name = models.CharField(max_length=255)
