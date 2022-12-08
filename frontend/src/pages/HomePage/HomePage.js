@@ -29,7 +29,7 @@ const HomePage = () => {
   return (
     <div className="container">
       <h1>Home Page for {user.username}!</h1>
-      <Button variant="primary">button</Button>
+      <Button>button</Button>
       {cars &&
         cars.map((car) => (
           <p key={car.id}>
