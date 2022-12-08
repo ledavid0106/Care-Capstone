@@ -21,7 +21,7 @@ import { Button } from "react-bootstrap";
 function App() {
   return (
     <div>
-      <Navbar fixed="sticky"/>
+      <Navbar/>
       <Routes>
         <Route path="/" element={<PrivateRoute><HomePage/></PrivateRoute>}/>
         <Route path="/register" element={<RegisterPage />} />

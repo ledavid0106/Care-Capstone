@@ -1,4 +1,4 @@
-
+import "./RxResult.css"
 
 
 // {rxid, active, patient_first_name, patient_middle_name, patient_last_name, patient_dob,
@@ -10,6 +10,7 @@ import RxEntries from "../RxEntries/RxEntries";
 
 const RxResult = ({prescription}) => {
     return ( 
+        <div className="RxResult">
         <table className="table table-dark table-stdiped table-bordered table-hover ">
             <thead>
                 <tr>
@@ -45,6 +46,7 @@ const RxResult = ({prescription}) => {
                 }
             </tbody>
         </table>
+    </div>
      );
 }
  

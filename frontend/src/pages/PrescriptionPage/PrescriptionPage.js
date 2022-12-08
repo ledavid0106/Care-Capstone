@@ -10,7 +10,7 @@ import Alert from '@material-ui/lab/Alert';
 
 
 
-const PrescriptionPage = ({props}) => {
+const PrescriptionPage = () => {
     const [user, token] = useAuth();
     const [prescription, setPrescription] = useState([])
     const [isLoading, setIsLoading] = useState(true);
