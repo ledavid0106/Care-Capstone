@@ -11,8 +11,8 @@ import Alert from '@material-ui/lab/Alert';
 
 
 const PrescriptionPage = () => {
-    const [user, token] = useAuth();
     const [prescription, setPrescription] = useState([])
+    const [user, token] = useAuth();
     const [isLoading, setIsLoading] = useState(true);
     const [isError, setIsError] = useState(false);
 
@@ -55,7 +55,7 @@ const PrescriptionPage = () => {
             } else {
                  rxactive = "Discontinued"
             }
-            console.log("active",response.data[i].active)
+            // console.log("active",response.data[i].active)
             const active = rxactive
             const patient_first_name = response.data[i].patient_first_name
             const patient_middle_name = response.data[i].patient_middle_name

@@ -4,7 +4,7 @@ import uuid
 
 # Create your models here.
 class Prescription(models.Model):
-    id = models.IntegerField(default=uuid.uuid4, primary_key=True)
+    # id = models.IntegerField(primary_key=True)
     active = models.BooleanField()
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, )
     patient_first_name = models.CharField(max_length=255)
