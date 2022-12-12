@@ -1,10 +1,13 @@
 import axios from 'axios';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, Component} from 'react';
 import { Form } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
 import useAuth from '../../hooks/useAuth';
-import Dropdown from '../DropDown/DropDown';
+// import Dropdown from '../DropDown/DropDown';
 import './AddNewRx.css';
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
+
 
 const AddNewRx = ({getAllRx}) => {
     const [show,setShow] = useState(false);
@@ -84,23 +87,12 @@ const AddNewRx = ({getAllRx}) => {
         handleClose()
     }
 
+    const options = patients.map((pt)=> {return (`${pt.first_name} ${pt.last_name} ${pt.dob}`)});
+    const defaultOption = options[0];
+
     return ( 
         <>
         <button className = "btn btn-dark shadow" onClick = {handleShow}>Add Rx</button>
-
-
-
-
-        {/* <Dropdown
-            open={open}
-            trigger={<button>Patients</button>}
-            menu={patients.map((pt)=>{return (<button onClick={handleMenuOne}>{pt.first_name}</button>)})}
-        /> */}
-
-
-
-
-
 
         <Modal show = {show} onHide = {handleClose}>
             <Modal.Header className = 'bp' closeButton>
@@ -116,19 +108,17 @@ const AddNewRx = ({getAllRx}) => {
                     />
                     <label for="active" id="active_label" value={active} onChange = {(e)=> setActive(e.target.value)}>Active</label>
                     </Form.Group>
+
+                    
                     <Form.Group  className = 'mb-3' >
                         <Form.Label>Patient ID</Form.Label>
-                        <Dropdown
-                            open={open}
-                            trigger={<button type="button" title={id}>Patient</button>}
-                            menu={patients.map((pt)=>{return (
-                            <button type="button" value ={pt} onClick = {(e)=>setID(e.target.value)}
-                            >{pt.first_name} {pt.last_name} {pt.dob}</button>)})}
-                            // onChange = {(e)=> setID(e.target.value)}
-                            // value = {id} 
-                        />
-                        {/* <Form.Control value = {id} onChange = {(e)=> setID(e.target.value)}/>  */}
+                        <Dropdown 
+                        options={options} value={defaultOption} onChange={this._onSelect} 
+                        placeholder="Select an option" 
+                        />;
                     </Form.Group>
+
+
                     <Form.Group  className = 'mb-3' >
                         <Form.Label>Patient First Name</Form.Label>
                         <Form.Control type = 'string' value = {patient_first_name} onChange = {(e)=> setPatient_first_name(e.target.value)}/> 
