@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, {useState, useEffect} from 'react';
 import { Form } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
-import useAuth from '../../hooks/useAuth';
+import useAuth from '../../../hooks/useAuth';
 
 import './AddNewRx.css';
 

@@ -2,11 +2,11 @@ import axios from 'axios';
 import React, {useState, useEffect} from 'react';
 import { Form } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
-import useAuth from '../../hooks/useAuth';
+import useAuth from '../../../hooks/useAuth';
 
 
 
-const AddNewProduction = ({}) => {
+const AddNewProduction = () => {
     const [show,setShow] = useState(false);
     const [user, token] = useAuth();
     const [isLoading, setIsLoading] = useState(true);
@@ -71,10 +71,10 @@ const AddNewProduction = ({}) => {
     
 
     async function addProduction(Rx) {
-        const response = await axios.post(`http://127.0.0.1:8000/api/production/`, 
-                                        Rx,
-                                        {headers: {Authorization: "Bearer " + token,}}
-                                        )
+        await axios.post(`http://127.0.0.1:8000/api/production/`, 
+                        Rx,
+                        {headers: {Authorization: "Bearer " + token,}}
+                        )
     }
 
     const handleSubmit = () => {

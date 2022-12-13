@@ -1,12 +1,9 @@
 import axios from 'axios';
 import React, {useState, useEffect} from 'react';
 import useAuth from '../../hooks/useAuth';
-import { Button } from "react-bootstrap";
-import RxResult from '../../components/RxResult/RxResult';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from '@material-ui/lab/Alert';
-// import {useParams} from 'react-router';
-// import { Link } from 'react-router-dom';
+import RxResult from '../../components/Rx/RxResult/RxResult';
 
 
 

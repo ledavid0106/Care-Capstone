@@ -1,9 +1,9 @@
 import "./RxResult.css"
 import axios from "axios";
-import useAuth from "../../hooks/useAuth";
+import useAuth from "../../../hooks/useAuth";
 import RxEntries from "../RxEntries/RxEntries";
 import AddNewRx from "../AddNewRx/AddNewRx";
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 
 const RxResult = ({prescription, setPrescription}) => {
     const [user, token] = useAuth();
