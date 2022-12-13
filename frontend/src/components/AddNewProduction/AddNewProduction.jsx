@@ -32,7 +32,7 @@ const AddNewProduction = ({}) => {
             .get("http://127.0.0.1:8000/api/production/all/",
                 {headers: {Authorization: "Bearer " + token,}})
             .then(response=> {
-                console.log('prod',response.data)
+                // console.log('prod',response.data)
                 setProduction(response.data)
                 setIsError(false)
                 // console.log(patients)
@@ -41,7 +41,7 @@ const AddNewProduction = ({}) => {
             .get("http://127.0.0.1:8000/api/patient_profile/all/",
                 {headers: {Authorization: "Bearer " + token,}})
             .then(response=> {
-                console.log("pt",response.data)
+                // console.log("pt",response.data)
                 setpatients(response.data)
                 setIsError(false)
                 // console.log(patients)
@@ -50,7 +50,7 @@ const AddNewProduction = ({}) => {
             .get("http://127.0.0.1:8000/api/prescription/all/",
                 {headers: {Authorization: "Bearer " + token,}})
             .then(response=> {
-                console.log("rx",response.data)
+                // console.log("rx",response.data)
                 setRx(response.data)
                 setIsError(false)
                 // console.log(patients)
@@ -58,7 +58,7 @@ const AddNewProduction = ({}) => {
         axios
             .get(`https://api.fda.gov/drug/ndc.json?search=generic_name:"Bupropion"&limit=10`)
             .then(response=> { 
-                console.log(response.data.results)
+                // console.log(response.data.results)
                 setSearch(response.data.results)
                 setIsError(false)
             })
@@ -85,7 +85,7 @@ const AddNewProduction = ({}) => {
             lot_number:lot_number,
             expiration:expiration
         }
-        console.log(newProd)    
+        // console.log(newProd)    
         addProduction(newProd)
         handleClose()
     }
