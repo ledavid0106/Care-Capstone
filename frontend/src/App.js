@@ -17,6 +17,7 @@ import Footer from "./components/Footer/Footer";
 // Util Imports
 import PrivateRoute from "./utils/PrivateRoute";
 import { Button } from "react-bootstrap";
+import MedicationPage from "./pages/MedicationPage/MedicationPage";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/rx" element={<PrivateRoute><PrescriptionPage/></PrivateRoute>}/>
+        <Route path="/meds" element={<PrivateRoute><MedicationPage/></PrivateRoute>}/>
       </Routes>
       <Footer />
     </div>
