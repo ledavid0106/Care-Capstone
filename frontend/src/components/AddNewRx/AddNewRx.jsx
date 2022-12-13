@@ -48,7 +48,7 @@ const AddNewRx = ({getAllRx}) => {
         axios
             .get(`https://api.fda.gov/drug/ndc.json?search=generic_name:"Bupropion"&limit=10`)
             .then(response=> { 
-                console.log(response.data.results)
+                // console.log(response.data.results)
                 setSearch(response.data.results)
                 setIsError(false)
             })
