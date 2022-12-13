@@ -1,24 +1,24 @@
 import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
 import React, {useState, useEffect} from 'react';
-import ProductionEntries from "../ProductionEntries/ProductionEntries";
-import AddNewProduction from "../AddNewProduction/AddNewProduction";
+import PatientEntries from "../PatientEntries/PatientEntries";
+import AddNewPatient from "../AddNewPatient/AddNewPatient";
 
 
-const ProductionResult = () => {
-    const [production, setProduction] = useState([])
+const PatientResults = () => {
+    const [patients, setPatients] = useState([])
     const [user, token] = useAuth();
 
     useEffect(()=> {
         axios
-            .get(`http://127.0.0.1:8000/api/production/all/`,{
+            .get(`http://127.0.0.1:8000/api/patient_profile/all/`,{
                 headers: {
                   Authorization: "Bearer " + token,
                 },
             })
             .then(response=> {
-                setProduction(response.data)
-                // console.log(response.data)
+                setPatients(response.data)
+                console.log(response.data)
             })
             .catch(error=>{
                 console.log(error)
@@ -29,27 +29,27 @@ const ProductionResult = () => {
 
     return ( 
         <div >
-            <AddNewProduction/>
+            <AddNewPatient/>
             <table className="table table-dark table-stdiped table-bordered table-hover ">
                 <thead>
                     <tr>
-                        <th>Production ID</th>
                         <th>Patient ID</th>
-                        <th>Patient Last Name</th>
-                        <th>Patient DOB</th>
-                        <th>Prescription ID</th>
-                        <th>Medication Generic Name</th>
-                        <th>NDC</th>
-                        <th>Dosage</th>
-                        <th>Lot-Number</th>
-                        <th>Expiration</th>
+                        <th>First Name</th>
+                        <th>Middle Name</th>
+                        <th>Last Name</th>
+                        <th>Sex</th>
+                        <th>DOB</th>
+                        <th>Weight</th>
+                        <th>Height</th>
+                        <th>Allergies</th>
+                        <th>Email</th>
                     </tr>  
                 </thead>
                 <tbody>
-                    {production.map((rx)=>{
+                    {patients.map((pt)=>{
                         return (
                             <tr>
-                                <ProductionEntries production={rx}/>
+                                <PatientEntries patients={pt}/>
                             </tr>
                         )
                     })
@@ -60,4 +60,4 @@ const ProductionResult = () => {
      );
 }
  
-export default ProductionResult;
+export default PatientResults;

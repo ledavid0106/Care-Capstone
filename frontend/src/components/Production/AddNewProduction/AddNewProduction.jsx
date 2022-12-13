@@ -85,7 +85,7 @@ const AddNewProduction = () => {
             lot_number:lot_number,
             expiration:expiration
         }
-        // console.log(newProd)    
+        console.log(newProd)    
         addProduction(newProd)
         handleClose()
     }
@@ -151,7 +151,7 @@ const AddNewProduction = () => {
             </Modal.Body>
             <Modal.Footer>
                 <button className = 'btn btn-secondary' onClick ={handleClose}>Cancel</button>
-                <button type = 'submit' className = 'btn btn-warning' onClick = {handleSubmit}>Add RX</button>
+                <button type = 'submit' className = 'btn btn-warning' onClick = {handleSubmit}>Add Production</button>
             </Modal.Footer>
         </Modal>
     </>

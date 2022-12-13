@@ -14,24 +14,25 @@ const PrescriptionPage = () => {
     const [isError, setIsError] = useState(false);
 
     useEffect(() => {
-        // setPrescription([]);
-        axios
-            .get("http://127.0.0.1:8000/api/prescription/all/", {
-                headers: {
-                  Authorization: "Bearer " + token,
-                },
-            })
-            .then(response=> {
-                // console.log(response.data)
-                createRxRows(response.data)
-                setIsError(false)
-            })
-            .catch(error=>{
-                console.log(error)
-                setIsError(true)
-                setIsLoading(false)
-            })
-        
+        const fetchRx = async () => {
+            axios
+                .get("http://127.0.0.1:8000/api/prescription/all/", {
+                    headers: {
+                      Authorization: "Bearer " + token,
+                    },
+                })
+                .then(response=> {
+                    console.log(response.data)
+                    createRxRows(response.data)
+                    setIsError(false)
+                })
+                .catch(error=>{
+                    console.log(error)
+                    setIsError(true)
+                    setIsLoading(false)
+                })
+            }
+            fetchRx();
         }, [token])
        
 
