@@ -33,6 +33,7 @@ const AddNewRx = ({getAllRx}) => {
     const [search, setSearch] = useState([])
     const handleShow = () =>setShow(true);
     const handleClose = () =>setShow(false);
+    const [drugsearch, setDrugSearch] = useState("Buproprion")
 
     useEffect(() => {
         
@@ -46,7 +47,7 @@ const AddNewRx = ({getAllRx}) => {
                 // console.log(patients)
             })
         axios
-            .get(`https://api.fda.gov/drug/ndc.json?search=generic_name:"Bupropion"&limit=10`)
+            .get(`https://api.fda.gov/drug/ndc.json?search=generic_name:"${drugsearch}"&limit=10`)
             .then(response=> { 
                 // console.log(response.data.results)
                 setSearch(response.data.results)
@@ -89,7 +90,9 @@ const AddNewRx = ({getAllRx}) => {
         }
         setActive(current => !current);
       };
-
+      function drugSearch(drug) {
+        setDrugSearch(drug)
+      }
     return ( 
         <>
         <button className = "btn btn-dark shadow" onClick = {handleShow}>Add Rx</button>
@@ -117,6 +120,10 @@ const AddNewRx = ({getAllRx}) => {
                             })}
                         </select>
                     </Form.Group>
+                    {/* <Form.Group  className = 'mb-3' >
+                        <Form.Label>Medication Search</Form.Label>
+                        <input type = 'text' value={drugsearch} onKeyPress = {drugSearch(this.value)}/> 
+                    </Form.Group>     */}
                     <Form.Group>
                         <Form.Label>NDC</Form.Label>
                             <select onChange={(e)=>setNdc(e.target.value)}>
