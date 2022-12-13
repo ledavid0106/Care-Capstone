@@ -4,12 +4,12 @@ from .models import Production
 class ProductionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Production
-        fields = ['id', 'patient_id', 'patient', 'prescription_id', 'prescription', 'medication_id', 'medication', 'patient_last_name', 'patient_dob',
-            'prescription_generic_name', 'prescription_dosage', 
+        fields = ['id', 'patient_id', 'patient', 'prescription_id', 'prescription', 'ndc', 
+            'prescription_generic_name', 'prescription_dosage', 'lot_number', 'expiration'
           ]
         depth = 1
     patient_id = serializers.IntegerField(write_only=True)
     prescription_id = serializers.IntegerField(write_only=True)
-    medication_id = serializers.IntegerField(write_only=True)
+ 
 
         

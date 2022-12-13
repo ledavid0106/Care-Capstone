@@ -15,8 +15,6 @@ const RxEntries = ({prescription}) => {
                 <td>{prescription.dosage}</td>
                 <td>{prescription.vessel}</td>
                 <td>{prescription.volume}</td>
-                <td>{prescription.lot_number}</td>
-                <td>{prescription.expiration}</td>
                 <td>{prescription.sig}</td>
                 <td>{prescription.frequency}</td>
                 <td>{prescription.route}</td>

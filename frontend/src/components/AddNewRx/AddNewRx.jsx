@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 import { Form } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
 import useAuth from '../../hooks/useAuth';
-import NDCFind from '../NDCFind/NDCFind';
+
 import './AddNewRx.css';
 
 
@@ -20,8 +20,6 @@ const AddNewRx = ({getAllRx}) => {
     const [dosage, setDosage] = useState("")
     const [vessel, setVessel] = useState("")
     const [volume, setVolume] = useState("")
-    const [lot_number, setLot_number] = useState("")
-    const [expiration, setExpiration] = useState("")
     const [sig, setSig] = useState("")
     const [frequency, setFrequency] = useState("")
     const [route, setRoute] = useState("")
@@ -32,11 +30,12 @@ const AddNewRx = ({getAllRx}) => {
     const [patients, setpatients] = useState([])
     const [isLoading, setIsLoading] = useState(true);
     const [isError, setIsError] = useState(false);
-    
+    const [search, setSearch] = useState([])
     const handleShow = () =>setShow(true);
     const handleClose = () =>setShow(false);
 
     useEffect(() => {
+        
         axios
             .get("http://127.0.0.1:8000/api/patient_profile/all/",
                 {headers: {Authorization: "Bearer " + token,}})
@@ -46,12 +45,19 @@ const AddNewRx = ({getAllRx}) => {
                 setIsError(false)
                 // console.log(patients)
             })
+        axios
+            .get(`https://api.fda.gov/drug/ndc.json?search=generic_name:"Bupropion"&limit=10`)
+            .then(response=> { 
+                console.log(response.data.results)
+                setSearch(response.data.results)
+                setIsError(false)
+            })
             .catch(error=>{
                 // console.log(error)
                 setIsError(true)
                 setIsLoading(false)
             })
-        }, )
+        }, [token])
     
 
     async function addRx(Rx) {
@@ -68,8 +74,7 @@ const AddNewRx = ({getAllRx}) => {
         const newRx = {active:active, patient_id:patient_id ,patient_first_name:patient_first_name, 
             patient_middle_name:patient_middle_name, patient_last_name:patient_last_name, 
             patient_dob:patient_dob, generic_name:generic_name, ndc:ndc, dosage:dosage, 
-            vessel:vessel, volume:volume, lot_number:lot_number, expiration:expiration, 
-            sig:sig, frequency:frequency, route:route, ordering_doctor:ordering_doctor, 
+            vessel:vessel, volume:volume, sig:sig, frequency:frequency, route:route, ordering_doctor:ordering_doctor, 
             ordering_doctor_phone_number:ordering_doctor_phone_number, indication:indication}
         console.log(newRx)    
         addRx(newRx)
@@ -88,7 +93,6 @@ const AddNewRx = ({getAllRx}) => {
     return ( 
         <>
         <button className = "btn btn-dark shadow" onClick = {handleShow}>Add Rx</button>
-        <NDCFind />
         <Modal show = {show} onHide = {handleClose}>
             <Modal.Header className = 'bp' closeButton>
                 <Modal.Title className='white'>Enter Rx Information</Modal.Title>
@@ -109,69 +113,109 @@ const AddNewRx = ({getAllRx}) => {
                     <Form.Label>Patient ID</Form.Label>
                         <select onChange={(e)=>setpatient_ID(e.target.value)}>
                             {patients.map(pt=>{
-                                return <option value={pt.id}>{pt.first_name} {pt.last_name} {pt.dob}</option>
+                                return <option value={pt.id}>{pt.id} {pt.first_name} {pt.last_name} {pt.dob}</option>
                             })}
                         </select>
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>NDC</Form.Label>
-                        {/* <NDCFind /> */}
+                            <select onChange={(e)=>setNdc(e.target.value)}>
+                                {search.map(sx=>{
+                                    return <option value={sx.product_ndc}>{sx.product_ndc} {sx.generic_name} {sx.active_ingredients[0]["strength"]} {sx.dosage_form}</option>
+                                })}
+                            </select>
                     </Form.Group>
                     <Form.Group  className = 'mb-3' >
                         <Form.Label>Patient First Name</Form.Label>
-                        <Form.Control type = 'string' value = {patient_first_name} onChange = {(e)=> setPatient_first_name(e.target.value)}/> 
+                        <select onChange={(e)=>setPatient_first_name(e.target.value)}>
+                            {patients.map(pt=>{
+                                return <option value={pt.first_name}>{pt.first_name} {pt.dob}</option>
+                            })}
+                        </select> 
                     </Form.Group>
                     <Form.Group  className = 'mb-3' >
                         <Form.Label>-Patient Middle Name</Form.Label>
-                        <Form.Control type = 'string' value = {patient_middle_name} onChange = {(e)=> setPatient_middle_name(e.target.value)}/> 
+                        <select onChange={(e)=>setPatient_middle_name(e.target.value)}>
+                            {patients.map(pt=>{
+                                return <option value={pt.middle_name}>{pt.first_name} {pt.dob}</option>
+                            })}
+                        </select>                     
                     </Form.Group>
                     <Form.Group  className = 'mb-3' >
                         <Form.Label>Patient Last Name</Form.Label>
-                        <Form.Control type = 'string' value = {patient_last_name} onChange = {(e)=> setPatient_last_name(e.target.value)}/> 
+                        <select onChange={(e)=>setPatient_last_name(e.target.value)}>
+                            {patients.map(pt=>{
+                                return <option value={pt.last_name}>{pt.first_name} {pt.dob}</option>
+                            })}
+                        </select>                     
                     </Form.Group>
                     <Form.Group  className = 'mb-3' >
                         <Form.Label>Patient Date Of Birth</Form.Label>
-                        <Form.Control type = 'date' value = {patient_dob} onChange = {(e)=> setPatient_dob(e.target.value)}/> 
+                        <select onChange={(e)=>setPatient_dob(e.target.value)}>
+                            {patients.map(pt=>{
+                                return <option value={pt.dob}>{pt.first_name} {pt.dob}</option>
+                            })}
+                        </select>                    
                     </Form.Group>
                     <Form.Group  className = 'mb-3' >
                         <Form.Label>Medication Generic Name</Form.Label>
-                        <Form.Control type = 'string' value = {generic_name} onChange = {(e)=> setGeneric_name(e.target.value)}/> 
-                    </Form.Group>
-                    <Form.Group  className = 'mb-3' >
+                        <select onChange={(e)=>setGeneric_name(e.target.value)}>
+                                {search.map(sx=>{
+                                    return <option value={sx.generic_name}>{sx.product_ndc} {sx.generic_name} {sx.active_ingredients[0]["strength"]} {sx.dosage_form}</option>
+                                })}
+                            </select>                    
+                        </Form.Group>
+                    {/* <Form.Group  className = 'mb-3' >
                         <Form.Label>NDC</Form.Label>
                         <Form.Control type = 'string' value = {ndc} onChange = {(e)=> setNdc(e.target.value)}/> 
-                    </Form.Group>
+                    </Form.Group> */}
                     <Form.Group  className = 'mb-3' >
                         <Form.Label>Dosage</Form.Label>
                         <Form.Control type = 'string' value = {dosage} onChange = {(e)=> setDosage(e.target.value)}/> 
-                    </Form.Group>                    <Form.Group  className = 'mb-3' >
-                        <Form.Label>Vessel</Form.Label>
-                        <Form.Control type = 'string' value = {vessel} onChange = {(e)=> setVessel(e.target.value)}/> 
-                    </Form.Group>                    <Form.Group  className = 'mb-3' >
+                    </Form.Group>                    
+                    <Form.Group  className = 'mb-3' >
+                        <Form.Label>Vessel: </Form.Label>
+                        <select onChange={(e)=>setVessel(e.target.value)}>
+                            <option value="Vessel">Vessel</option>
+                            <option value="Tablet">Tablet</option>
+                            <option value="Capsule">Capsule</option>
+                            <option value="Powder">Powder</option>
+                            <option value="Reconstitute">Reconstitute</option>
+                            <option value="Liquid">Liquid</option>
+                        </select>  
+                    </Form.Group>                    
+                    <Form.Group  className = 'mb-3' >
                         <Form.Label>Volume</Form.Label>
                         <Form.Control type = 'string' value = {volume} onChange = {(e)=> setVolume(e.target.value)}/> 
-                    </Form.Group>                    <Form.Group  className = 'mb-3' >
-                        <Form.Label>Lot Number</Form.Label>
-                        <Form.Control type = 'string' value = {lot_number} onChange = {(e)=> setLot_number(e.target.value)}/> 
-                    </Form.Group>                    <Form.Group  className = 'mb-3' >
-                        <Form.Label>Expiration</Form.Label>
-                        <Form.Control type = 'date' value = {expiration} onChange = {(e)=> setExpiration(e.target.value)}/> 
-                    </Form.Group>                    <Form.Group  className = 'mb-3' >
+                    </Form.Group>                                        
+                    <Form.Group  className = 'mb-3' >
                         <Form.Label>SIG</Form.Label>
                         <Form.Control type = 'string' value = {sig} onChange = {(e)=> setSig(e.target.value)}/> 
-                    </Form.Group>                    <Form.Group  className = 'mb-3' >
+                    </Form.Group>                    
+                    <Form.Group  className = 'mb-3' >
                         <Form.Label>Frequency</Form.Label>
                         <Form.Control type = 'string' value = {frequency} onChange = {(e)=> setFrequency(e.target.value)}/> 
-                    </Form.Group>                    <Form.Group  className = 'mb-3' >
-                        <Form.Label>Route</Form.Label>
-                        <Form.Control type = 'string' value = {route} onChange = {(e)=> setRoute(e.target.value)}/> 
-                    </Form.Group>                    <Form.Group  className = 'mb-3' >
+                    </Form.Group>                    
+                    <Form.Group  className = 'mb-3' >
+                        <Form.Label>Route: </Form.Label>
+                        <select onChange={(e)=>setRoute(e.target.value)}>
+                            <option value="Route">Route</option>
+                            <option value="By Mouth">By Mouth</option>
+                            <option value="IV">IV</option>
+                            <option value="Sublingual">Sublingual</option>
+                            <option value="Rectally">Rectally</option>
+                            <option value="Vaginally">Vaginally</option>
+                        </select>   
+                    </Form.Group>                    
+                    <Form.Group  className = 'mb-3' >
                         <Form.Label>Ordering Doctor</Form.Label>
                         <Form.Control type = 'string' value = {ordering_doctor} onChange = {(e)=> setOrdering_doctor(e.target.value)}/> 
-                    </Form.Group>                    <Form.Group  className = 'mb-3' >
+                    </Form.Group>                    
+                    <Form.Group  className = 'mb-3' >
                         <Form.Label>Ordering Doctor Phone Number</Form.Label>
                         <Form.Control type = 'string' value = {ordering_doctor_phone_number} onChange = {(e)=> setOrdering_doctor_phone_number(e.target.value)}/> 
-                    </Form.Group>                    <Form.Group  className = 'mb-3' >
+                    </Form.Group>                    
+                    <Form.Group  className = 'mb-3' >
                         <Form.Label>Indication</Form.Label>
                         <Form.Control type = 'string' value = {indication} onChange = {(e)=> setIndication(e.target.value)}/> 
                     </Form.Group>

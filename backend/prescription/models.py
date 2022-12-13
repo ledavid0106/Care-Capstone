@@ -16,8 +16,6 @@ class Prescription(models.Model):
     dosage = models.CharField(max_length=255)
     vessel = models.CharField(max_length=255)
     volume = models.CharField(max_length=255)
-    lot_number = models.CharField(max_length=255)
-    expiration = models.DateField(max_length=8) 
     sig = models.CharField(max_length=255)
     frequency = models.CharField(max_length=255)
     route = models.CharField(max_length=255)

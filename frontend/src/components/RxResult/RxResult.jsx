@@ -33,8 +33,6 @@ const RxResult = ({prescription, setPrescription}) => {
                     <th>Dosage</th>
                     <th>Vessel</th>
                     <th>Volume</th>
-                    <th>Lot-Number</th>
-                    <th>Expiration</th>
                     <th>Sig</th>
                     <th>Frequency</th>
                     <th>Route</th>
