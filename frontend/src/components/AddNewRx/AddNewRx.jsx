@@ -107,7 +107,7 @@ const AddNewRx = ({getAllRx}) => {
                     <Form.Label>Patient ID</Form.Label>
                         <select onChange={(e)=>setpatient_ID(e.target.value)}>
                             {patients.map(pt=>{
-                                return <option value={pt.id}>{pt.first_name}</option>
+                                return <option value={pt.id}>{pt.first_name} {pt.last_name} {pt.dob}</option>
                             })}
                         </select>
                     </Form.Group>

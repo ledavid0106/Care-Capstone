@@ -17,7 +17,7 @@ const PrescriptionPage = () => {
     const [isError, setIsError] = useState(false);
 
     useEffect(() => {
-        setPrescription([]);
+        // setPrescription([]);
         axios
             .get("http://127.0.0.1:8000/api/prescription/all/", {
                 headers: {
@@ -34,6 +34,7 @@ const PrescriptionPage = () => {
                 setIsError(true)
                 setIsLoading(false)
             })
+        
         }, [token])
        
 
@@ -108,7 +109,7 @@ const PrescriptionPage = () => {
     return ( 
         <div className="prescriptionpage">
         {isLoading ? <CircularProgress className='loading' color='secondary' /> : null}
-        <RxResult prescription={prescription}/>
+        <RxResult prescription={prescription} setPrescription={setPrescription}/>
         </div>
      );
 }
