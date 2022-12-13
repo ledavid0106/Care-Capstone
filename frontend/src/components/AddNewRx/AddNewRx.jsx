@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react';
 import { Form } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
 import useAuth from '../../hooks/useAuth';
+import NDCFind from '../NDCFind/NDCFind';
 import './AddNewRx.css';
 
 
@@ -43,13 +44,14 @@ const AddNewRx = ({getAllRx}) => {
                 // console.log(response.data)
                 setpatients(response.data)
                 setIsError(false)
+                // console.log(patients)
             })
             .catch(error=>{
                 // console.log(error)
                 setIsError(true)
                 setIsLoading(false)
             })
-        }, [token])
+        }, )
     
 
     async function addRx(Rx) {
@@ -58,7 +60,7 @@ const AddNewRx = ({getAllRx}) => {
                                         {headers: {Authorization: "Bearer " + token,}}
                                         )
         if (response.status === 201) {
-            await getAllRx()
+             getAllRx()
         }
     }
 
@@ -86,7 +88,7 @@ const AddNewRx = ({getAllRx}) => {
     return ( 
         <>
         <button className = "btn btn-dark shadow" onClick = {handleShow}>Add Rx</button>
-
+        <NDCFind />
         <Modal show = {show} onHide = {handleClose}>
             <Modal.Header className = 'bp' closeButton>
                 <Modal.Title className='white'>Enter Rx Information</Modal.Title>
@@ -110,6 +112,10 @@ const AddNewRx = ({getAllRx}) => {
                                 return <option value={pt.id}>{pt.first_name} {pt.last_name} {pt.dob}</option>
                             })}
                         </select>
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>NDC</Form.Label>
+                        {/* <NDCFind /> */}
                     </Form.Group>
                     <Form.Group  className = 'mb-3' >
                         <Form.Label>Patient First Name</Form.Label>

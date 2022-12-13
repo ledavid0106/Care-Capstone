@@ -10,6 +10,7 @@ const MedicationPage = () => {
             .get(`https://api.fda.gov/drug/ndc.json?search=generic_name:"Bupropion"&limit=5`)
             .then(response=>{
                 console.log(response.data.results)
+                // console.log(response.data.results[1].openfda.rxcui)
                 setMedication(response.data)
             })
             .catch(error=>{
