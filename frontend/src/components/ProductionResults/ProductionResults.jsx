@@ -2,11 +2,13 @@ import axios from "axios";
 import useAuth from "../../hooks/useAuth";
 import React, {useState, useEffect} from 'react';
 import ProductionEntries from "../ProductionEntries/ProductionEntries";
+import AddNewProduction from "../AddNewProduction/AddNewProduction";
 
 const ProductionResult = () => {
     const [production, setProduction] = useState([])
+    const [user, token] = useAuth();
 
-    async function getAllProduction() {
+    useEffect(()=> {
         axios
             .get(`http://127.0.0.1:8000/api/production/all/`,{
                 headers: {
@@ -20,9 +22,13 @@ const ProductionResult = () => {
             .catch(error=>{
                 console.log(error)
             })
-    }
+    },[])
+
+
+
     return ( 
         <div >
+            <AddNewProduction/>
             <table className="table table-dark table-stdiped table-bordered table-hover ">
                 <thead>
                     <tr>
@@ -42,7 +48,7 @@ const ProductionResult = () => {
                     {production.map((rx)=>{
                         return (
                             <tr>
-                                <ProductionEntries production={production}/>
+                                <ProductionEntries production={rx}/>
                             </tr>
                         )
                     })

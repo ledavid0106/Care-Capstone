@@ -9,6 +9,8 @@ import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import PrescriptionPage from "./pages/PrescriptionPage/PrescriptionPage";
+import MedicationPage from "./pages/MedicationPage/MedicationPage";
+import ProductionPage from "./pages/ProductionPage/ProductionPage";
 
 // Component Imports
 import Navbar from "./components/NavBar/NavBar";
@@ -17,7 +19,6 @@ import Footer from "./components/Footer/Footer";
 // Util Imports
 import PrivateRoute from "./utils/PrivateRoute";
 import { Button } from "react-bootstrap";
-import MedicationPage from "./pages/MedicationPage/MedicationPage";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/rx" element={<PrivateRoute><PrescriptionPage/></PrivateRoute>}/>
         <Route path="/meds" element={<PrivateRoute><MedicationPage/></PrivateRoute>}/>
+        <Route path="/production" element={<PrivateRoute><ProductionPage/></PrivateRoute>}/>
       </Routes>
       <Footer />
     </div>
