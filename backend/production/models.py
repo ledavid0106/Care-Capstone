@@ -13,6 +13,7 @@ class Production(models.Model):
     prescription_dosage = models.CharField(max_length=255)
     lot_number = models.CharField(max_length=255)
     expiration = models.DateField(max_length=8) 
+    verified = models.CharField(max_length=255, null=True, blank=True)
 
 
     def __str__(self):

@@ -19,6 +19,7 @@ import Footer from "./components/Footer/Footer";
 // Util Imports
 import PrivateRoute from "./utils/PrivateRoute";
 import { Button } from "react-bootstrap";
+import VerificationPage from "./pages/VerificationPage/VerificationPage";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/rx" element={<PrivateRoute><PrescriptionPage/></PrivateRoute>}/>
         <Route path="/meds" element={<PrivateRoute><MedicationPage/></PrivateRoute>}/>
         <Route path="/production" element={<PrivateRoute><ProductionPage/></PrivateRoute>}/>
+        <Route path="/verification" element={<PrivateRoute><VerificationPage/></PrivateRoute>}/>
       </Routes>
       <Footer />
     </div>

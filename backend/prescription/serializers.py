@@ -9,7 +9,7 @@ class PrescriptionSerializer(serializers.ModelSerializer):
             'generic_name', 'ndc', 'dosage', 'vessel', 'volume',
              'sig', 'frequency', 'route', 
             'ordering_doctor', 'ordering_doctor_phone_number',
-            'indication',
+            'indication', 'verified'
           ]
         depth = 1
     patient_id = serializers.IntegerField(write_only=True)

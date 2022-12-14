@@ -5,7 +5,7 @@ class ProductionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Production
         fields = ['id', 'patient_id', 'patient', 'prescription_id', 'prescription', 'ndc', 
-            'prescription_generic_name', 'prescription_dosage', 'lot_number', 'expiration'
+            'prescription_generic_name', 'prescription_dosage', 'lot_number', 'expiration', 'verified'
           ]
         depth = 1
     patient_id = serializers.IntegerField(write_only=True)

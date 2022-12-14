@@ -22,6 +22,7 @@ class Prescription(models.Model):
     ordering_doctor = models.CharField(max_length=255)
     ordering_doctor_phone_number = models.CharField(max_length=255)
     indication = models.CharField(max_length=255)
+    verified = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
          return f"{self.id}" + " " + self.generic_name + " " + f"{self.patient_last_name}"
