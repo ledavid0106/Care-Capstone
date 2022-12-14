@@ -33,7 +33,7 @@ const AddNewRx = ({getAllRx}) => {
     const [search, setSearch] = useState([])
     const handleShow = () =>setShow(true);
     const handleClose = () =>setShow(false);
-    const [drugsearch, setDrugSearch] = useState("")
+    const [drugsearch, setDrugSearch] = useState([])
     const [inputSearch, setInputSearch] = useState('');
 
     useEffect(() => {
@@ -47,13 +47,6 @@ const AddNewRx = ({getAllRx}) => {
                 setIsError(false)
                 // console.log(patients)
             })
-        axios
-            .get(`https://api.fda.gov/drug/ndc.json?search=generic_name:"${drugsearch}"&limit=10`)
-            .then(response=> { 
-                // console.log(response.data.results)
-                setSearch(response.data.results)
-                setIsError(false)
-            })
             .catch(error=>{
                 // console.log(error)
                 setIsError(true)
@@ -61,7 +54,21 @@ const AddNewRx = ({getAllRx}) => {
             })
         }, [token])
     
-
+    async function getdrug(drugsearch1) {
+        axios
+            .get(`https://api.fda.gov/drug/ndc.json?search=generic_name:"${drugsearch1}"&limit=10`)
+            .then(response=> { 
+                // console.log(response.data.results)
+                setDrugSearch(response.data.results)
+                setIsError(false)
+            })
+            .catch(error=>{
+                // console.log(error)
+                setIsError(true)
+                setIsLoading(false)
+            })
+        
+    }
     async function addRx(Rx) {
         const response = await axios.post(`http://127.0.0.1:8000/api/prescription/`, 
                                         Rx,
@@ -70,6 +77,16 @@ const AddNewRx = ({getAllRx}) => {
         if (response.status === 201) {
              getAllRx()
         }
+    }
+    async function theHandler(info){
+        let filpt = patients.filter(e=>e.id= info)[0]
+        console.log(filpt)
+        setpatient_ID(filpt.id)
+        setPatient_first_name(filpt.first_name)
+        setPatient_middle_name(filpt.middle_name)
+        setPatient_last_name(filpt.last_name)
+        setPatient_dob(filpt.dob)
+        
     }
 
     const handleSubmit = () => {
@@ -113,37 +130,30 @@ const AddNewRx = ({getAllRx}) => {
                     />
                     <label for="active" id="active_label">Active</label>
                     </Form.Group>
-                    <Form.Group>
+                    {/* <Form.Group>
                     <Form.Label>Patient ID</Form.Label>
                         <select onChange={(e)=>setpatient_ID(e.target.value)}>
                             {patients.map(pt=>{
                                 return <option value={pt.id}>{pt.id} {pt.first_name} {pt.last_name} {pt.dob}</option>
                             })}
                         </select>
-                    </Form.Group>
+                    </Form.Group> */}
                     {/* <Form.Group  className = 'mb-3' >
                         <Form.Label>Medication Search</Form.Label>
                         <input type = 'text' value={drugsearch} onKeyPress = {drugSearch(this.value)}/> 
                     </Form.Group>     */}
-                    <Form.Group>
-                        <Form.Label>NDC</Form.Label>
-                            <select onChange={(e)=>setNdc(e.target.value)}>
-                                {search.map(sx=>{
-                                    return <option value={sx.product_ndc}>{sx.product_ndc} {sx.generic_name} {sx.active_ingredients[0]["strength"]} {sx.dosage_form}</option>
-                                })}
-                            </select>
-                    </Form.Group>
+
                     <Form.Group  className = 'mb-3' >
-                        <Form.Label>Patient First Name</Form.Label>
-                        <select onChange={(e)=>setPatient_first_name(e.target.value)}>
+                        <Form.Label>Patient </Form.Label>
+                        <select onChange={(e)=>theHandler(e.target.value)}>
                             {patients.map(pt=>{
-                                return <option value={pt.first_name}>{pt.first_name} {pt.dob}</option>
+                                return <option value={pt.id}>{pt.id} {pt.first_name} {pt.dob}</option>
                             })}
                         </select> 
                     </Form.Group>
-                    <Form.Group  className = 'mb-3' >
+                    {/* <Form.Group  className = 'mb-3' >
                         <Form.Label>-Patient Middle Name</Form.Label>
-                        <select onChange={(e)=>setPatient_middle_name(e.target.value)}>
+                        <select onChange={(e)=>setPatient_middle_name(e.target.value)} >
                             {patients.map(pt=>{
                                 return <option value={pt.middle_name}>{pt.first_name} {pt.dob}</option>
                             })}
@@ -164,22 +174,31 @@ const AddNewRx = ({getAllRx}) => {
                                 return <option value={pt.dob}>{pt.first_name} {pt.dob}</option>
                             })}
                         </select>                    
-                    </Form.Group>
+                    </Form.Group> */}
+                    
                     <Form.Group  className = 'mb-3' >
                     <div>
-                        <label> Search <input type='text' onChange={(e) => setDrugSearch(e.target.value)} value={drugsearch}></input></label>
+                        <label> Drug Search <input type='text' onChange={(e) => getdrug(e.target.value)} ></input></label>
                     </div>
-                        <Form.Label>Medication Generic Name</Form.Label>
+                    <Form.Label>Medication Generic Name</Form.Label>
                         <select onChange={(e)=>setGeneric_name(e.target.value)}>
-                                {search.map(sx=>{
-                                    return <option value={sx.generic_name}>{sx.product_ndc} {sx.generic_name} {sx.active_ingredients[0]["strength"]} {sx.dosage_form}</option>
-                                })}
-                            </select>                    
-                        </Form.Group>
-                    <Form.Group  className = 'mb-3' >
+                            {drugsearch.filter(el=>el.active_ingredients).map(sx=>{
+                                return <option value={sx.generic_name}>{sx.product_ndc} {sx.generic_name} {sx.active_ingredients[0]["strength"]} {sx.dosage_form}</option>
+                            })}
+                        </select>                    
+                    </Form.Group>
+                    <Form.Group>
+                    <Form.Label>NDC: </Form.Label>
+                        <select onChange={(e)=>setNdc(e.target.value)}>
+                            {drugsearch.filter(el=>el.active_ingredients).map(sx=>{
+                                return <option value={sx.product_ndc}>{sx.product_ndc}</option>
+                            })}
+                        </select>
+                    </Form.Group>
+                    {/* <Form.Group  className = 'mb-3' >
                         <Form.Label>NDC</Form.Label>
                         <Form.Control type = 'string' value = {ndc} onChange = {(e)=> setNdc(e.target.value)}/> 
-                    </Form.Group>
+                    </Form.Group> */}
                     <Form.Group  className = 'mb-3' >
                         <Form.Label>Dosage</Form.Label>
                         <Form.Control type = 'string' value = {dosage} onChange = {(e)=> setDosage(e.target.value)}/> 
