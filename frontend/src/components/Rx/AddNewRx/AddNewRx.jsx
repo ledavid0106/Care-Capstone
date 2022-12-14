@@ -33,7 +33,8 @@ const AddNewRx = ({getAllRx}) => {
     const [search, setSearch] = useState([])
     const handleShow = () =>setShow(true);
     const handleClose = () =>setShow(false);
-    const [drugsearch, setDrugSearch] = useState("Buproprion")
+    const [drugsearch, setDrugSearch] = useState("")
+    const [inputSearch, setInputSearch] = useState('');
 
     useEffect(() => {
         
@@ -165,6 +166,9 @@ const AddNewRx = ({getAllRx}) => {
                         </select>                    
                     </Form.Group>
                     <Form.Group  className = 'mb-3' >
+                    <div>
+                        <label> Search <input type='text' onChange={(e) => setDrugSearch(e.target.value)} value={drugsearch}></input></label>
+                    </div>
                         <Form.Label>Medication Generic Name</Form.Label>
                         <select onChange={(e)=>setGeneric_name(e.target.value)}>
                                 {search.map(sx=>{
@@ -172,10 +176,10 @@ const AddNewRx = ({getAllRx}) => {
                                 })}
                             </select>                    
                         </Form.Group>
-                    {/* <Form.Group  className = 'mb-3' >
+                    <Form.Group  className = 'mb-3' >
                         <Form.Label>NDC</Form.Label>
                         <Form.Control type = 'string' value = {ndc} onChange = {(e)=> setNdc(e.target.value)}/> 
-                    </Form.Group> */}
+                    </Form.Group>
                     <Form.Group  className = 'mb-3' >
                         <Form.Label>Dosage</Form.Label>
                         <Form.Control type = 'string' value = {dosage} onChange = {(e)=> setDosage(e.target.value)}/> 
