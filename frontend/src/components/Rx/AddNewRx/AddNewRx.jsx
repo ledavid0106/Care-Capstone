@@ -85,7 +85,6 @@ const AddNewRx = ({getAllRx}) => {
         setPatient_middle_name(filpt.middle_name)
         setPatient_last_name(filpt.last_name)
         setPatient_dob(filpt.dob)
-        
     }
 
     const handleSubmit = () => {

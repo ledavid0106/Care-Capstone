@@ -55,13 +55,13 @@ const AddNewProduction = () => {
                 setIsError(false)
                 // console.log(patients)
             })
-        axios
-            .get(`https://api.fda.gov/drug/ndc.json?search=generic_name:"Bupropion"&limit=10`)
-            .then(response=> { 
-                // console.log(response.data.results)
-                setSearch(response.data.results)
-                setIsError(false)
-            })
+        // axios
+        //     .get(`https://api.fda.gov/drug/ndc.json?search=generic_name:"Bupropion"&limit=10`)
+        //     .then(response=> { 
+        //         // console.log(response.data.results)
+        //         setSearch(response.data.results)
+        //         setIsError(false)
+        //     })
             .catch(error=>{
                 // console.log(error)
                 setIsError(true)
@@ -100,7 +100,7 @@ const AddNewProduction = () => {
             <Modal.Body>
                 <Form className = 'm-3'>
                     <Form.Group>
-                    <Form.Label>Patient ID</Form.Label>
+                    <Form.Label>Patient: </Form.Label>
                         <select onChange={(e)=>setpatient_ID(e.target.value)}>
                             {patients.map(pt=>{
                                 return <option value={pt.id}>{pt.id} {pt.first_name} {pt.last_name} {pt.dob}</option>
@@ -108,7 +108,7 @@ const AddNewProduction = () => {
                         </select>
                     </Form.Group>
                     <Form.Group>
-                    <Form.Label>Prescription ID</Form.Label>
+                    <Form.Label>Prescription: </Form.Label>
                         <select onChange={(e)=>setprescription_id(e.target.value)}>
                             {rx.map(pt=>{
                                 return <option value={pt.id}>{pt.id} {pt.generic_name} {pt.patient_dob}</option>
@@ -118,8 +118,8 @@ const AddNewProduction = () => {
                     <Form.Group>
                         <Form.Label>NDC</Form.Label>
                             <select onChange={(e)=>setNdc(e.target.value)}>
-                                {search.map(sx=>{
-                                    return <option value={sx.product_ndc}>{sx.product_ndc} {sx.generic_name} {sx.active_ingredients[0]["strength"]} {sx.dosage_form}</option>
+                                {rx.map(sx=>{
+                                    return <option value={sx.ndc}>{sx.ndc}</option>
                                 })}
                             </select>
                     </Form.Group>
@@ -127,7 +127,7 @@ const AddNewProduction = () => {
                     <Form.Label>Medication Generic Name</Form.Label>
                         <select onChange={(e)=>setprescription_generic_name(e.target.value)}>
                             {rx.map(pt=>{
-                                return <option value={pt.generic_name}>{pt.id} {pt.generic_name} {pt.patient_dob}</option>
+                                return <option value={pt.generic_name}>{pt.generic_name} </option>
                             })}
                         </select>
                     </Form.Group>
