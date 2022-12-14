@@ -3,7 +3,6 @@ import React, {useState, useEffect} from 'react';
 import { Form } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
 import useAuth from '../../../hooks/useAuth';
-
 import './AddNewRx.css';
 
 
@@ -37,7 +36,6 @@ const AddNewRx = ({getAllRx}) => {
     const [inputSearch, setInputSearch] = useState('');
 
     useEffect(() => {
-        
         axios
             .get("http://127.0.0.1:8000/api/patient_profile/all/",
                 {headers: {Authorization: "Bearer " + token,}})
@@ -66,9 +64,9 @@ const AddNewRx = ({getAllRx}) => {
                 // console.log(error)
                 setIsError(true)
                 setIsLoading(false)
-            })
-        
+            })   
     }
+
     async function addRx(Rx) {
         const response = await axios.post(`http://127.0.0.1:8000/api/prescription/`, 
                                         Rx,
@@ -78,6 +76,7 @@ const AddNewRx = ({getAllRx}) => {
              getAllRx()
         }
     }
+
     async function theHandler(info){
         let filpt = patients.filter(e=>e.id= info)[0]
         console.log(filpt)
@@ -108,9 +107,7 @@ const AddNewRx = ({getAllRx}) => {
         }
         setActive(current => !current);
       };
-      function drugSearch(drug) {
-        setDrugSearch(drug)
-      }
+
     return ( 
         <>
         <button className = "btn btn-dark shadow" onClick = {handleShow}>Add Rx</button>
@@ -130,19 +127,6 @@ const AddNewRx = ({getAllRx}) => {
                     />
                     <label for="active" id="active_label">Active</label>
                     </Form.Group>
-                    {/* <Form.Group>
-                    <Form.Label>Patient ID</Form.Label>
-                        <select onChange={(e)=>setpatient_ID(e.target.value)}>
-                            {patients.map(pt=>{
-                                return <option value={pt.id}>{pt.id} {pt.first_name} {pt.last_name} {pt.dob}</option>
-                            })}
-                        </select>
-                    </Form.Group> */}
-                    {/* <Form.Group  className = 'mb-3' >
-                        <Form.Label>Medication Search</Form.Label>
-                        <input type = 'text' value={drugsearch} onKeyPress = {drugSearch(this.value)}/> 
-                    </Form.Group>     */}
-
                     <Form.Group  className = 'mb-3' >
                         <Form.Label>Patient </Form.Label>
                         <select onChange={(e)=>theHandler(e.target.value)}>
@@ -151,54 +135,25 @@ const AddNewRx = ({getAllRx}) => {
                             })}
                         </select> 
                     </Form.Group>
-                    {/* <Form.Group  className = 'mb-3' >
-                        <Form.Label>-Patient Middle Name</Form.Label>
-                        <select onChange={(e)=>setPatient_middle_name(e.target.value)} >
-                            {patients.map(pt=>{
-                                return <option value={pt.middle_name}>{pt.first_name} {pt.dob}</option>
-                            })}
-                        </select>                     
-                    </Form.Group>
-                    <Form.Group  className = 'mb-3' >
-                        <Form.Label>Patient Last Name</Form.Label>
-                        <select onChange={(e)=>setPatient_last_name(e.target.value)}>
-                            {patients.map(pt=>{
-                                return <option value={pt.last_name}>{pt.first_name} {pt.dob}</option>
-                            })}
-                        </select>                     
-                    </Form.Group>
-                    <Form.Group  className = 'mb-3' >
-                        <Form.Label>Patient Date Of Birth</Form.Label>
-                        <select onChange={(e)=>setPatient_dob(e.target.value)}>
-                            {patients.map(pt=>{
-                                return <option value={pt.dob}>{pt.first_name} {pt.dob}</option>
-                            })}
-                        </select>                    
-                    </Form.Group> */}
-                    
                     <Form.Group  className = 'mb-3' >
                     <div>
                         <label> Drug Search <input type='text' onChange={(e) => getdrug(e.target.value)} ></input></label>
                     </div>
-                    <Form.Label>Medication Generic Name</Form.Label>
-                        <select onChange={(e)=>setGeneric_name(e.target.value)}>
-                            {drugsearch.filter(el=>el.active_ingredients).map(sx=>{
-                                return <option value={sx.generic_name}>{sx.product_ndc} {sx.generic_name} {sx.active_ingredients[0]["strength"]} {sx.dosage_form}</option>
-                            })}
-                        </select>                    
+                        <Form.Label>Medication Generic Name</Form.Label>
+                            <select onChange={(e)=>setGeneric_name(e.target.value)}>
+                                {drugsearch.filter(el=>el.active_ingredients).map(sx=>{
+                                    return <option value={sx.generic_name}>{sx.product_ndc} {sx.generic_name} {sx.active_ingredients[0]["strength"]} {sx.dosage_form}</option>
+                                })}
+                            </select>                    
                     </Form.Group>
                     <Form.Group>
-                    <Form.Label>NDC: </Form.Label>
-                        <select onChange={(e)=>setNdc(e.target.value)}>
-                            {drugsearch.filter(el=>el.active_ingredients).map(sx=>{
-                                return <option value={sx.product_ndc}>{sx.product_ndc}</option>
-                            })}
-                        </select>
+                        <Form.Label>NDC: </Form.Label>
+                            <select onChange={(e)=>setNdc(e.target.value)}>
+                                {drugsearch.filter(el=>el.active_ingredients).map(sx=>{
+                                    return <option value={sx.product_ndc}>{sx.product_ndc}</option>
+                                })}
+                            </select>
                     </Form.Group>
-                    {/* <Form.Group  className = 'mb-3' >
-                        <Form.Label>NDC</Form.Label>
-                        <Form.Control type = 'string' value = {ndc} onChange = {(e)=> setNdc(e.target.value)}/> 
-                    </Form.Group> */}
                     <Form.Group  className = 'mb-3' >
                         <Form.Label>Dosage</Form.Label>
                         <Form.Control type = 'string' value = {dosage} onChange = {(e)=> setDosage(e.target.value)}/> 
