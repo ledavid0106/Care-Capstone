@@ -9,7 +9,7 @@ const VerificationProcess = () => {
     const [unverifiedRx, setUnverifiedRx] = useState([])
     const [unverifiedProduction, setUnverifiedProduction] = useState([])
     const [user, token] = useAuth();
-
+    
     useEffect(()=>{
         getAUVRx();
         getAUVProd();
@@ -20,12 +20,26 @@ const VerificationProcess = () => {
                                         {headers: {Authorization: "Bearer " + token,}})
         console.log(response.data)
         setUnverifiedRx(response.data)
+        let filRx = [];
+        for (let i = 0; i < unverifiedRx.length; i++) {
+            if (unverifiedRx[i].verified === null) {
+                filRx.push(unverifiedRx[i])
+            }
+        setUnverifiedRx(filRx)
+        }
     }
     async function getAUVProd(){
         const response = await axios.get("http://127.0.0.1:8000/api/production/all/",
                                         {headers: {Authorization: "Bearer " + token,}})
         console.log(response.data)
         setUnverifiedProduction(response.data)
+        let filProd = [];
+        for (let i = 0; i < unverifiedProduction.length; i++) {
+            if (unverifiedProduction[i].verified === null) {
+                filProd.push(unverifiedProduction[i])
+            }
+        setUnverifiedProduction(filProd)
+        }
     }
 
     return ( 
