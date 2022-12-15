@@ -34,6 +34,9 @@ const AddNewRx = ({getAllRx}) => {
     const handleClose = () =>setShow(false);
     const [drugsearch, setDrugSearch] = useState([])
     const [inputSearch, setInputSearch] = useState('');
+    const [interactionList, setInteractionList] = useState([])
+
+    let displayalert = ""
 
     useEffect(() => {
         axios
@@ -79,7 +82,7 @@ const AddNewRx = ({getAllRx}) => {
 
     async function theHandler(info){
         let filpt = patients.filter(e=>e.id==info)[0]
-        console.log(filpt)
+        // console.log(filpt)
         setpatient_ID(filpt.id)
         setPatient_first_name(filpt.first_name)
         setPatient_middle_name(filpt.middle_name)
@@ -87,6 +90,75 @@ const AddNewRx = ({getAllRx}) => {
         setPatient_dob(filpt.dob)
     }
 
+    async function theInteractions(info){
+        let list = patients.filter(e=>e.id==patient_id)[0]
+        // console.log("list",list)
+        const response = await axios.get(`http://127.0.0.1:8000/api/prescription/all/`,
+                                        {headers: {Authorization: "Bearer " + token,}})
+        // console.log(response.data)
+        let filtered = response.data.filter(e=>e.patient.id==patient_id)
+        // console.log(filtered)
+        let ndclist = []
+        filtered.map(pt=>{
+            ndclist.push(pt.ndc)
+        })
+        let rxcuilist = []
+        for (let i = 0; i<ndclist.length; i++) {
+            // console.log("ndc",ndclist[i])
+            const findrxcui = await axios.get(`https://api.fda.gov/drug/ndc.json?search=product_ndc:"${ndclist[i]}"&limit=1`)
+            for (let y = 0; y<findrxcui.data.results[0].openfda.rxcui.length; y++){
+                // console.log('rxcui',findrxcui.data.results[0].openfda.rxcui)
+                rxcuilist.push(findrxcui.data.results[0].openfda.rxcui[y])
+            }
+        }
+        // console.log("rxcuilist",rxcuilist)
+        let druglist = `${rxcuilist[0]}`
+        for (let z=1; z<rxcuilist.length; z++) {
+            druglist+=`+${rxcuilist[z]}`
+        }
+        console.log('Beginning')
+        console.log("druglist",druglist)
+        let testing = "207106+152923+656659"
+        const findinteractions = await axios.get(` https://rxnav.nlm.nih.gov/REST/interaction/list.json?rxcuis=${testing}`)
+        let definelist = []
+        definelist = findinteractions.data.fullInteractionTypeGroup[0].fullInteractionType
+        console.log('definelist1',definelist)
+        const interactlist = []
+        for (let q = 0; q <definelist.length; q++){
+            // console.log("define1",definelist[q].interactionPair[0].severity)
+            // console.log("define1",definelist[q].interactionPair[0].description)   
+            displayalert += 
+                    `\nDrugs: ${definelist[q].interactionPair[0].interactionConcept[0].minConceptItem.name} and ${definelist[q].interactionPair[0].interactionConcept[1].minConceptItem.name} \nSeverity: ${definelist[q].interactionPair[0].severity} \nDescription: ${definelist[q].interactionPair[0].description}
+                    `         
+            for (let e = 0; e<definelist.length; e++){
+                if (definelist[e].interactionPair[0].severity != "N/A") {
+                alert(`\nDrugs: ${definelist[e].interactionPair[0].interactionConcept[0].minConceptItem.name} and ${definelist[e].interactionPair[0].interactionConcept[1].minConceptItem.name} \nSeverity: ${definelist[e].interactionPair[0].severity} \nDescription: ${definelist[e].interactionPair[0].description}
+                `)    
+            }
+            }
+        }
+        console.log("display",displayalert)
+        let definelist2 = []
+        if (findinteractions.data.fullInteractionTypeGroup.length > 0){
+            definelist2 = findinteractions.data.fullInteractionTypeGroup[1].fullInteractionType
+            const interactlist2 = []
+            for (let r = 0; r<definelist2.length; r++){
+                console.log("define2",definelist2[r].interactionPair[0])
+                console.log("define3",definelist2[r].interactionPair[0].description)
+                displayalert += 
+                `\nDrugs: ${definelist2[r].interactionPair[0].interactionConcept[0].minConceptItem.name} and ${definelist2[r].interactionPair[0].interactionConcept[1].minConceptItem.name} \nSeverity: ${definelist2[r].interactionPair[0].severity} \nDescription: ${definelist2[r].interactionPair[0].description}
+                `
+            }
+            for (let e = 0; e<definelist2.length; e++){
+                if (definelist2[e].interactionPair[0].severity != "N/A") {
+                alert(`\nDrugs: ${definelist2[e].interactionPair[0].interactionConcept[0].minConceptItem.name} and ${definelist2[e].interactionPair[0].interactionConcept[1].minConceptItem.name} \nSeverity: ${definelist2[e].interactionPair[0].severity} \nDescription: ${definelist2[e].interactionPair[0].description}
+                `)    
+            }
+            }
+        }
+
+        alert(displayalert)
+    }
     const handleSubmit = () => {
         const newRx = {active:active, patient_id:patient_id ,patient_first_name:patient_first_name, 
             patient_middle_name:patient_middle_name, patient_last_name:patient_last_name, 
@@ -153,6 +225,7 @@ const AddNewRx = ({getAllRx}) => {
                                 })}
                             </select>
                     </Form.Group>
+                    <button type="button" onClick={theInteractions}>Check for Interactions</button>
                     <Form.Group  className = 'mb-3' >
                         <Form.Label>Dosage</Form.Label>
                         <Form.Control type = 'string' value = {dosage} onChange = {(e)=> setDosage(e.target.value)}/> 
