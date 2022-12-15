@@ -37,7 +37,7 @@ const AddNewRx = ({getAllRx}) => {
     const [interactionList, setInteractionList] = useState([])
 
     let displayalert = ""
-
+    const struggle = []
     useEffect(() => {
         axios
             .get("http://127.0.0.1:8000/api/patient_profile/all/",
@@ -70,6 +70,8 @@ const AddNewRx = ({getAllRx}) => {
             })   
     }
 
+
+
     async function addRx(Rx) {
         const response = await axios.post(`http://127.0.0.1:8000/api/prescription/`, 
                                         Rx,
@@ -91,27 +93,32 @@ const AddNewRx = ({getAllRx}) => {
     }
 
     async function theInteractions(info){
-        let list = patients.filter(e=>e.id==patient_id)[0]
+        // let list = patients.filter(e=>e.id==patient_id)[0]
         // console.log("list",list)
         const response = await axios.get(`http://127.0.0.1:8000/api/prescription/all/`,
                                         {headers: {Authorization: "Bearer " + token,}})
         // console.log(response.data)
         let filtered = response.data.filter(e=>e.patient.id==patient_id)
         // console.log(filtered)
-        let ndclist = []
+        const ndclist = []
+        // const ndcblank = []
+        console.log("struggle",struggle)
+        let ndcblank = []
+        console.log("blank",ndcblank)
         filtered.map(pt=>{
-            ndclist.push(pt.ndc)
+            ndcblank.push(pt.ndc)
+            // console.log("filtered",pt.ndc)
         })
         let rxcuilist = []
-        for (let i = 0; i<ndclist.length; i++) {
+        for (let i = 0; i<ndcblank.length; i++) {
             // console.log("ndc",ndclist[i])
-            const findrxcui = await axios.get(`https://api.fda.gov/drug/ndc.json?search=product_ndc:"${ndclist[i]}"&limit=1`)
+            const findrxcui = await axios.get(`https://api.fda.gov/drug/ndc.json?search=product_ndc:"${ndcblank[i]}"&limit=1`)
             for (let y = 0; y<findrxcui.data.results[0].openfda.rxcui.length; y++){
                 // console.log('rxcui',findrxcui.data.results[0].openfda.rxcui)
                 rxcuilist.push(findrxcui.data.results[0].openfda.rxcui[y])
             }
         }
-        // console.log("rxcuilist",rxcuilist)
+        console.log("rxcuilist",rxcuilist)
         let druglist = `${rxcuilist[0]}`
         for (let z=1; z<rxcuilist.length; z++) {
             druglist+=`+${rxcuilist[z]}`
@@ -119,7 +126,7 @@ const AddNewRx = ({getAllRx}) => {
         console.log('Beginning')
         console.log("druglist",druglist)
         let testing = "207106+152923+656659"
-        const findinteractions = await axios.get(` https://rxnav.nlm.nih.gov/REST/interaction/list.json?rxcuis=${testing}`)
+        const findinteractions = await axios.get(` https://rxnav.nlm.nih.gov/REST/interaction/list.json?rxcuis=${druglist}`)
         let definelist = []
         definelist = findinteractions.data.fullInteractionTypeGroup[0].fullInteractionType
         console.log('definelist1',definelist)
@@ -139,7 +146,7 @@ const AddNewRx = ({getAllRx}) => {
         }
         console.log("display",displayalert)
         let definelist2 = []
-        if (findinteractions.data.fullInteractionTypeGroup.length > 0){
+        if (findinteractions.data.fullInteractionTypeGroup.length > 1){
             definelist2 = findinteractions.data.fullInteractionTypeGroup[1].fullInteractionType
             const interactlist2 = []
             for (let r = 0; r<definelist2.length; r++){
@@ -211,7 +218,7 @@ const AddNewRx = ({getAllRx}) => {
                         <label> Drug Search <input type='text' onChange={(e) => getdrug(e.target.value)} ></input></label>
                     </div>
                         <Form.Label>Medication Generic Name</Form.Label>
-                            <select onChange={(e)=>setGeneric_name(e.target.value)}>
+                            <select onChange={(e)=>{setGeneric_name(e.target.value)}}>
                                 {drugsearch.filter(el=>el.active_ingredients).map(sx=>{
                                     return <option value={sx.generic_name}>{sx.product_ndc} {sx.generic_name} {sx.active_ingredients[0]["strength"]} {sx.dosage_form}</option>
                                 })}
@@ -219,7 +226,11 @@ const AddNewRx = ({getAllRx}) => {
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>NDC: </Form.Label>
-                            <select onChange={(e)=>setNdc(e.target.value)}>
+                            <select onChange={(e)=>{
+                                                    setNdc(e.target.value)
+                                                    // struggle=(e.target.value)
+                                                }
+                                                }>
                                 {drugsearch.filter(el=>el.active_ingredients).map(sx=>{
                                     return <option value={sx.product_ndc}>{sx.product_ndc}</option>
                                 })}
