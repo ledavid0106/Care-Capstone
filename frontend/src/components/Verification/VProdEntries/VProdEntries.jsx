@@ -1,9 +1,11 @@
+import VerifyProdButton from "../VerifyProdButton/VerifyProdButton";
 
 
 
 const VProdEntries = ({production}) => {
     return ( 
         <>
+            <VerifyProdButton production={production}/>
             <td>{production.id}</td>
             <td>{production.patient.id}</td>
             <td>{production.patient.last_name}</td>

@@ -78,7 +78,7 @@ const AddNewRx = ({getAllRx}) => {
     }
 
     async function theHandler(info){
-        let filpt = patients.filter(e=>e.id= info)[0]
+        let filpt = patients.filter(e=>e.id==info)[0]
         console.log(filpt)
         setpatient_ID(filpt.id)
         setPatient_first_name(filpt.first_name)

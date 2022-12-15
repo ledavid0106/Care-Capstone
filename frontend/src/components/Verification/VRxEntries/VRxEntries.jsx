@@ -1,3 +1,4 @@
+import VerifyRxButton from "../VerifyRxButton/VerifyRxButton";
 
 const VRxEntries = ({prescription}) => {
     let rxactive = ""
@@ -8,6 +9,7 @@ const VRxEntries = ({prescription}) => {
     }
     return ( 
             <>
+                <VerifyRxButton RxId={prescription}/>
                 <td>{prescription.id}</td>
                 <td>{rxactive}</td>
                 <td>{prescription.patient_first_name}</td>

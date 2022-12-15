@@ -19,28 +19,20 @@ const VerificationProcess = () => {
         const response = await axios.get("http://127.0.0.1:8000/api/prescription/all/",
                                         {headers: {Authorization: "Bearer " + token,}})
         console.log(response.data)
-        setUnverifiedRx(response.data)
-        let filRx = [];
-        for (let i = 0; i < unverifiedRx.length; i++) {
-            if (unverifiedRx[i].verified === null) {
-                filRx.push(unverifiedRx[i])
-            }
-        setUnverifiedRx(filRx)
-        }
+        let te = response.data.filter(e=>e.verified==null)
+        console.log("te",te)
+        setUnverifiedRx(te)
+        
     }
     async function getAUVProd(){
         const response = await axios.get("http://127.0.0.1:8000/api/production/all/",
                                         {headers: {Authorization: "Bearer " + token,}})
         console.log(response.data)
-        setUnverifiedProduction(response.data)
-        let filProd = [];
-        for (let i = 0; i < unverifiedProduction.length; i++) {
-            if (unverifiedProduction[i].verified === null) {
-                filProd.push(unverifiedProduction[i])
-            }
-        setUnverifiedProduction(filProd)
+        let mp = response.data.filter(e=>e.verified==null)
+        console.log("mp",mp)
+        setUnverifiedProduction(mp)
         }
-    }
+    
 
     return ( 
         <div>
@@ -48,6 +40,7 @@ const VerificationProcess = () => {
                 <table className="table table-dark table-stdiped table-bordered table-hover ">
                     <thead>
                         <tr>
+                            <th>Verify</th>
                             <th>RxID</th>
                             <th>Active Status</th>
                             <th>Patient First Name</th>
@@ -83,6 +76,7 @@ const VerificationProcess = () => {
             <table className="table table-dark table-stdiped table-bordered table-hover ">
                 <thead>
                     <tr>
+                        <th>Verify</th>
                         <th>Production ID</th>
                         <th>Patient ID</th>
                         <th>Patient Last Name</th>
