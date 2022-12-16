@@ -35,6 +35,8 @@ const AddNewRx = ({getAllRx}) => {
     const [drugsearch, setDrugSearch] = useState([])
     const [inputSearch, setInputSearch] = useState('');
     const [interactionList, setInteractionList] = useState([])
+ 
+  console.log("user",user)
 
     let displayalert = ""
     const struggle = []
@@ -57,7 +59,7 @@ const AddNewRx = ({getAllRx}) => {
     
     async function getdrug(drugsearch1) {
         axios
-            .get(`https://api.fda.gov/drug/ndc.json?search=generic_name:"${drugsearch1}"&limit=10`)
+            .get(`https://api.fda.gov/drug/ndc.json?search=generic_name:"${drugsearch1}"&limit=20`)
             .then(response=> { 
                 // console.log(response.data.results)
                 setDrugSearch(response.data.results)
@@ -142,10 +144,11 @@ const AddNewRx = ({getAllRx}) => {
                     `\nDrugs: ${definelist[q].interactionPair[0].interactionConcept[0].minConceptItem.name} and ${definelist[q].interactionPair[0].interactionConcept[1].minConceptItem.name} \nSeverity: ${definelist[q].interactionPair[0].severity} \nDescription: ${definelist[q].interactionPair[0].description}
                     `         
             for (let e = 0; e<definelist.length; e++){
-                if (definelist[e].interactionPair[0].severity != "N/A") {
-                alert(`\nDrugs: ${definelist[e].interactionPair[0].interactionConcept[0].minConceptItem.name} and ${definelist[e].interactionPair[0].interactionConcept[1].minConceptItem.name} \nSeverity: ${definelist[e].interactionPair[0].severity} \nDescription: ${definelist[e].interactionPair[0].description}
-                `)    
-            }
+                if (definelist[e].interactionPair[0].severity != "N/A" ) {
+                    alert(`\nDrugs: ${definelist[e].interactionPair[0].interactionConcept[0].minConceptItem.name} and ${definelist[e].interactionPair[0].interactionConcept[1].minConceptItem.name} \nSeverity: ${definelist[e].interactionPair[0].severity} \nDescription: ${definelist[e].interactionPair[0].description}
+                    `)
+                    break    
+                }   
             }
         }
         console.log("display",displayalert)

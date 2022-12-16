@@ -18,6 +18,7 @@ import Footer from "./components/Footer/Footer";
 
 // Util Imports
 import PrivateRoute from "./utils/PrivateRoute";
+import PharmacistRoute from "./utils/PharmacistRoute";
 
 function App() {
   return (
@@ -29,8 +30,8 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/rx" element={<PrivateRoute><PrescriptionPage/></PrivateRoute>}/>
         <Route path="/production" element={<PrivateRoute><ProductionPage/></PrivateRoute>}/>
-        <Route path="/verification" element={<PrivateRoute><VerificationPage/></PrivateRoute>}/>
-      </Routes>
+        <Route path="/verification" element={<PharmacistRoute><VerificationPage/></PharmacistRoute>}/>
+      </Routes> 
       <Footer />
     </div>
   );
