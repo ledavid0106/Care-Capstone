@@ -15,6 +15,21 @@ const Navbar = () => {
             <b>Care Capstone</b>
           </Link>
         </li>
+        <li>
+          <Link to="rx/">
+            Prescriptions
+          </Link>
+        </li>
+        <li>
+          <Link to="production/">
+            Production
+          </Link>
+        </li>
+        <li>
+          <Link to="verification/">
+            Verification
+          </Link>
+        </li>
         <li className="">
           {user ? (
             <button onClick={logoutUser}>Logout</button>

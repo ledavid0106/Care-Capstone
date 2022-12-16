@@ -71,7 +71,8 @@ const RegisterPage = () => {
           <input
             type="checkbox"
             name="is_Pharmacist"
-            value={formData.is_Pharmacist}
+            // value={formData.is_Pharmacist}
+            value="false"
             onChange={handleInputChange}
           />
         </label>
