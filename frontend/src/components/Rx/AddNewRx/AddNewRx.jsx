@@ -70,6 +70,10 @@ const AddNewRx = ({getAllRx}) => {
             })   
     }
 
+    function testing(gimme) {
+        setNdc(gimme)
+        theInteractions(gimme)
+    }
 
 
     async function addRx(Rx) {
@@ -100,10 +104,10 @@ const AddNewRx = ({getAllRx}) => {
         // console.log(response.data)
         let filtered = response.data.filter(e=>e.patient.id==patient_id)
         // console.log(filtered)
-        const ndclist = []
+        // const ndclist = [info]
         // const ndcblank = []
         console.log("struggle",struggle)
-        let ndcblank = []
+        let ndcblank = [info]
         console.log("blank",ndcblank)
         filtered.map(pt=>{
             ndcblank.push(pt.ndc)
@@ -227,8 +231,8 @@ const AddNewRx = ({getAllRx}) => {
                     <Form.Group>
                         <Form.Label>NDC: </Form.Label>
                             <select onChange={(e)=>{
-                                                    setNdc(e.target.value)
-                                                    // struggle=(e.target.value)
+                                                    testing(e.target.value)
+                                                    
                                                 }
                                                 }>
                                 {drugsearch.filter(el=>el.active_ingredients).map(sx=>{
@@ -236,7 +240,7 @@ const AddNewRx = ({getAllRx}) => {
                                 })}
                             </select>
                     </Form.Group>
-                    <button type="button" onClick={theInteractions}>Check for Interactions</button>
+                    {/* <button type="button" onClick={theInteractions}>Check for Interactions</button> */}
                     <Form.Group  className = 'mb-3' >
                         <Form.Label>Dosage</Form.Label>
                         <Form.Control type = 'string' value = {dosage} onChange = {(e)=> setDosage(e.target.value)}/> 
