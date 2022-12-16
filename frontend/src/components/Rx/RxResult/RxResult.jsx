@@ -18,7 +18,9 @@ const RxResult = ({prescription, setPrescription}) => {
     }
     return ( 
         <div className="RxResult">
-        <AddNewRx getAllRx={getAllRx}/>
+        <div className="addbutton">
+            <AddNewRx getAllRx={getAllRx} />   
+        </div>
         <table className="table table-dark table-stdiped table-bordered table-hover ">
             <thead>
                 <tr>

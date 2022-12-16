@@ -195,7 +195,8 @@ const AddNewRx = ({getAllRx}) => {
 
     return ( 
         <>
-        <button className = "btn btn-dark shadow" onClick = {handleShow}>Add Rx</button>
+        <div className='addrx'>
+        <button className = "btn btn-dark shadow" variant="primary" onClick = {handleShow}>Add Rx</button>
         <Modal show = {show} onHide = {handleClose}>
             <Modal.Header className = 'bp' closeButton>
                 <Modal.Title className='white'>Enter Rx Information</Modal.Title>
@@ -301,6 +302,7 @@ const AddNewRx = ({getAllRx}) => {
                 <button type = 'submit' className = 'btn btn-warning' onClick = {handleSubmit}>Add RX</button>
             </Modal.Footer>
         </Modal>
+        </div>
     </>
      );
 }

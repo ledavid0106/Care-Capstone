@@ -3,7 +3,7 @@ import useAuth from "../../../hooks/useAuth";
 import React, {useState, useEffect} from 'react';
 import PatientEntries from "../PatientEntries/PatientEntries";
 import AddNewPatient from "../AddNewPatient/AddNewPatient";
-
+import "./PatientResults.css"
 
 const PatientResults = () => {
     const [patients, setPatients] = useState([])
@@ -28,8 +28,8 @@ const PatientResults = () => {
 
 
     return ( 
-        <div >
-            <AddNewPatient/>
+        <div className="home">
+            <div className="plswork"><AddNewPatient/></div>
             <table className="table table-dark table-stdiped table-bordered table-hover ">
                 <thead>
                     <tr>

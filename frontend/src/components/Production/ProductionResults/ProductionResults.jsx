@@ -3,6 +3,7 @@ import useAuth from "../../../hooks/useAuth";
 import React, {useState, useEffect} from 'react';
 import ProductionEntries from "../ProductionEntries/ProductionEntries";
 import AddNewProduction from "../AddNewProduction/AddNewProduction";
+import "./ProductionResults.css"
 
 
 const ProductionResult = () => {
@@ -28,8 +29,8 @@ const ProductionResult = () => {
 
 
     return ( 
-        <div >
-            <AddNewProduction/>
+        <div className="bigtable">
+            <div className="prodbutt"><AddNewProduction/></div>
             <table className="table table-dark table-stdiped table-bordered table-hover ">
                 <thead>
                     <tr>

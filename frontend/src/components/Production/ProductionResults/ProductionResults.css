@@ -1,9 +1,11 @@
-.RxResult{
+
+
+.bigtable{
     /* margin-top: 5%; */
     padding: 10px;
 }
 
-.addbutton{
+.prodbutt{
     padding-bottom: 10px;
     display: flex;
     justify-content: center;

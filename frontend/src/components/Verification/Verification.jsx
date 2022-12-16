@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 import useAuth from "../../hooks/useAuth";
 import VProdEntries from "./VProdEntries/VProdEntries";
 import VRxEntries from "./VRxEntries/VRxEntries";
-
+import "./Verification.css"
 
 const VerificationProcess = () => {
     const [unverifiedRx, setUnverifiedRx] = useState([])
@@ -35,8 +35,8 @@ const VerificationProcess = () => {
     
 
     return ( 
-        <div>
-            <div > Unverified Prescriptions
+        <div className="bigbigtable">
+            <div > <h2 className="rx">Unverified Prescriptions</h2>
                 <table className="table table-dark table-stdiped table-bordered table-hover ">
                     <thead>
                         <tr>
@@ -72,7 +72,7 @@ const VerificationProcess = () => {
                     </tbody>
                 </table>
             </div>
-            <div > Unverified Production
+            <div> <h2 className="prod">Unverified Production</h2>
             <table className="table table-dark table-stdiped table-bordered table-hover ">
                 <thead>
                     <tr>

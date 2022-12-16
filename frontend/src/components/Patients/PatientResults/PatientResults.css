@@ -1,11 +1,11 @@
-.RxResult{
+.home{
     /* margin-top: 5%; */
     padding: 10px;
+    
 }
 
-.addbutton{
-    padding-bottom: 10px;
+.plswork{
     display: flex;
     justify-content: center;
+    padding-bottom: 10px;
 }
-
