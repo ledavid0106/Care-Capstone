@@ -16,7 +16,6 @@ li {
   padding: 1.5rem 2rem;
   position: fixed;
   width: 100%;
-  
 
 }
 
@@ -37,3 +36,37 @@ li {
   cursor: pointer;
   font-size: 2rem;
 }
+
+.links{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.rx{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  padding-left: 20px;
+  
+}
+.prod{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  padding-left: 20px;
+
+}
+.veri{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  padding-left: 20px;
+  padding-right: 800px;
+}
+

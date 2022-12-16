@@ -15,28 +15,18 @@ const Navbar = () => {
             <b>Care Capstone</b>
           </Link>
         </li>
-        <li>
-          <Link to="rx/">
-            Prescriptions
-          </Link>
-        </li>
-        <li>
-          <Link to="production/">
-            Production
-          </Link>
-        </li>
-        <li>
-          <Link to="verification/">
-            Verification
-          </Link>
-        </li>
-        <li className="">
-          {user ? (
-            <button onClick={logoutUser}>Logout</button>
-          ) : (
-            <button onClick={() => navigate("/login")}>Login</button>
-          )}
-        </li>
+        <div className="links">
+          <li className="rx"><Link to="rx/"><button>Prescription</button></Link></li>
+          <li className="prod"><Link to="production/"><button>Production</button></Link></li>
+          <li className="veri"><Link to="verification/"><button>Verification</button></Link></li>
+          <li className="">
+            {user ? (
+              <button onClick={logoutUser}>Logout</button>
+              ) : (
+                <button onClick={() => navigate("/login")}>Login</button>
+                )}
+          </li>
+        </div>
       </ul>
     </div>
   );

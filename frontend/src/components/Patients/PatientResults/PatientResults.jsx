@@ -43,6 +43,7 @@ const PatientResults = () => {
                         <th>Height</th>
                         <th>Allergies</th>
                         <th>Email</th>
+                        <th>Details</th>
                     </tr>  
                 </thead>
                 <tbody>

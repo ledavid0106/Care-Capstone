@@ -1,3 +1,4 @@
+import PatientButton from "../PatientButton/PatientButton";
 
 
 
@@ -14,6 +15,7 @@ const PatientEntries = ({patients}) => {
             <td>{patients.height}</td>
             <td>{patients.allergies}</td>
             <td>{patients.email}</td>
+            <PatientButton patient={patients}/>
         </>
      );
 }
