@@ -181,6 +181,7 @@ const AddNewRx = ({getAllRx}) => {
             ordering_doctor_phone_number:ordering_doctor_phone_number, indication:indication}
         console.log(newRx)    
         addRx(newRx)
+        window.location.reload(false)
         handleClose()
     }
 

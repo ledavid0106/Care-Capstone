@@ -73,7 +73,7 @@ const VerificationProcess = () => {
                 </table>
             </div>
             <div> <h2 className="prod">Unverified Production</h2>
-            <table className="table table-dark table-stdiped table-bordered table-hover ">
+            <table className="table table-dark table-striped table-bordered table-hover ">
                 <thead>
                     <tr>
                         <th>Verify</th>

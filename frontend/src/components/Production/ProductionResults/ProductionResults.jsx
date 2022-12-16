@@ -31,7 +31,7 @@ const ProductionResult = () => {
     return ( 
         <div className="bigtable">
             <div className="prodbutt"><AddNewProduction/></div>
-            <table className="table table-dark table-stdiped table-bordered table-hover ">
+            <table className="table table-dark table-striped table-bordered table-hover ">
                 <thead>
                     <tr>
                         <th>Production ID</th>

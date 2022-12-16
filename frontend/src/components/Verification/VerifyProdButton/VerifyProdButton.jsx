@@ -57,6 +57,7 @@ const VerifyProdButton = ({production}) => {
         updateStatus(veri)
         console.log(veri)
         // console.log(production)
+        window.location.reload(false)
         handleClose()
     }
 

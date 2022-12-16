@@ -87,6 +87,7 @@ const AddNewProduction = () => {
         }
         console.log(newProd)    
         addProduction(newProd)
+        window.location.reload(false)
         handleClose()
     }
 

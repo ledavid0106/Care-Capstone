@@ -53,6 +53,7 @@ const AddNewPatient = () => {
         }
         console.log(newPt)    
         addPt(newPt)
+        window.location.reload(false)
         handleClose()
     }
 

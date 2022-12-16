@@ -71,6 +71,7 @@ const VerifyRxButton = ({RxId}) => {
         updateStatus(veri)
         // console.log(veri)
         // console.log(RxId)
+        window.location.reload(false)
         handleClose()
     }
     // console.log("check",RxId)

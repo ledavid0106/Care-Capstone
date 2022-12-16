@@ -30,9 +30,10 @@ const PatientResults = () => {
     return ( 
         <div className="home">
             <div className="plswork"><AddNewPatient/></div>
-            <table className="table table-dark table-stdiped table-bordered table-hover ">
+            <table className="table table-dark table-bordered table-hover table-striped">
                 <thead>
-                    <tr>
+                    
+                    <tr className="trow">
                         <th>Patient ID</th>
                         <th>First Name</th>
                         <th>Middle Name</th>
