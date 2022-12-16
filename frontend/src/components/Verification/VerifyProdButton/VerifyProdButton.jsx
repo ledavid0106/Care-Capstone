@@ -3,7 +3,7 @@ import axios from "axios";
 import React, {useState } from 'react';
 import { useEffect } from 'react';
 import useAuth from '../../../hooks/useAuth';
-
+import "./VerifyProdButton.css"
 
 const VerifyProdButton = ({production}) => {
     const [user, token] = useAuth();
@@ -63,7 +63,7 @@ const VerifyProdButton = ({production}) => {
 
     return ( 
         <>
-            <button onClick={handleShow}>Verify</button>
+            <button onClick={handleShow} className="buto">Verify</button>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Enter Your Initials to Verify</Modal.Title>

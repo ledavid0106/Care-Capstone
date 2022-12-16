@@ -47,7 +47,7 @@ const PatientResults = () => {
                         <th>Details</th>
                     </tr>  
                 </thead>
-                <tbody>
+                <tbody className="trying">
                     {patients.map((pt)=>{
                         return (
                             <tr>

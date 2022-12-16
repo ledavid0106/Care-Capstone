@@ -3,7 +3,7 @@ import axios from "axios";
 import React, {useState } from 'react';
 import { useEffect } from 'react';
 import useAuth from '../../../hooks/useAuth';
-
+import "./PatientButton.css"
 
 const PatientButton = ({patient}) => {
     const [show,setShow] = useState(false);
@@ -13,7 +13,7 @@ const PatientButton = ({patient}) => {
     let datee = patient.dob[0]+patient.dob[1]+patient.dob[2]+patient.dob[3]
     return ( 
         <>
-        <button onClick={handleShow}>Details</button>
+        <button onClick={handleShow} className="butto">Details</button>
         <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Patient Details</Modal.Title>

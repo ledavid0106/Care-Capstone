@@ -9,6 +9,7 @@ const VRxEntries = ({prescription}) => {
     }
     return ( 
             <>
+                
                 <VerifyRxButton RxId={prescription}/>
                 <td>{prescription.id}</td>
                 <td>{rxactive}</td>

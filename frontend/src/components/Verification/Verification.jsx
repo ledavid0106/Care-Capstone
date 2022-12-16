@@ -74,9 +74,9 @@ const VerificationProcess = () => {
             </div>
             <div> <h2 className="prod">Unverified Production</h2>
             <table className="table table-dark table-striped table-bordered table-hover ">
-                <thead>
+                <thead >
                     <tr>
-                        <th>Verify</th>
+                        <th style={{textAlign: "center"}}>Verify</th>
                         <th>Production ID</th>
                         <th>Patient ID</th>
                         <th>Patient Last Name</th>
