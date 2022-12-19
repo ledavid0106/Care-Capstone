@@ -99,6 +99,7 @@ const VerifyRxButton = ({RxId}) => {
         }
         const findinteractions = await axios.get(` https://rxnav.nlm.nih.gov/REST/interaction/list.json?rxcuis=${druglist}`)
         let definelist = []
+        console.log(findinteractions)
         definelist = findinteractions.data.fullInteractionTypeGroup[0].fullInteractionType
         const interactlist = []
         for (let q = 0; q <definelist.length; q++){
