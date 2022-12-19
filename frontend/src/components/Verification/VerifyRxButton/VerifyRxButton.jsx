@@ -28,7 +28,7 @@ const VerifyRxButton = ({RxId}) => {
     const [ordering_doctor, setOrdering_doctor] = useState("")
     const [ordering_doctor_phone_number, setOrdering_doctor_phone_number] = useState("")
     const [indication, setIndication] = useState("")
-    let displayalert = ""
+    let displayalert = `Allergies: ${RxId.patient.allergies} \n`
 
 
     async function updateStatus(verified){
