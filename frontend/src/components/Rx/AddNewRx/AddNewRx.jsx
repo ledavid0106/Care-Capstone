@@ -36,7 +36,7 @@ const AddNewRx = ({getAllRx}) => {
     const [inputSearch, setInputSearch] = useState('');
     const [interactionList, setInteractionList] = useState([])
  
-  console.log("user",user)
+//   console.log("user",user)
 
     let displayalert = ""
     const struggle = []
@@ -61,7 +61,7 @@ const AddNewRx = ({getAllRx}) => {
         axios
             .get(`https://api.fda.gov/drug/ndc.json?search=generic_name:"${drugsearch1}"&limit=20`)
             .then(response=> { 
-                // console.log(response.data.results)
+                console.log(response.data.results[0].pharm_class)
                 setDrugSearch(response.data.results)
                 setIsError(false)
             })
@@ -216,7 +216,10 @@ const AddNewRx = ({getAllRx}) => {
                     </Form.Group>
                     <Form.Group  className = 'mb-3' >
                         <Form.Label>Patient </Form.Label>
-                        <select onChange={(e)=>theHandler(e.target.value)}>
+                        <select onChange={(e)=>theHandler(e.target.value)}  classNames={{
+                                control: (state) =>
+                                state.isFocused ? 'border-red-600' : 'border-grey-300',
+                            }}>
                             {patients.map(pt=>{
                                 return <option value={pt.id}>{pt.id} {pt.first_name} {pt.dob}</option>
                             })}
@@ -226,22 +229,20 @@ const AddNewRx = ({getAllRx}) => {
                     <div>
                         <label> Drug Search <input type='text' onChange={(e) => getdrug(e.target.value)} ></input></label>
                     </div>
+                        {/* <label> Pharm Class:</label> */}
+                        {/* <h5>{drugsearch[0].pharm_class[0]}</h5> */}
                         <Form.Label>Medication Generic Name</Form.Label>
-                            <select onChange={(e)=>{setGeneric_name(e.target.value)}}>
+                            <select onChange={(e)=>{setGeneric_name(e.target.value)}} style={{width: "450px"}}>
                                 {drugsearch.filter(el=>el.active_ingredients).map(sx=>{
                                     return <option value={sx.generic_name}>{sx.product_ndc} {sx.generic_name} {sx.active_ingredients[0]["strength"]} {sx.dosage_form}</option>
                                 })}
-                            </select>                    
+                            </select>     
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>NDC: </Form.Label>
-                            <select onChange={(e)=>{
-                                                    testing(e.target.value)
-                                                    
-                                                }
-                                                }>
+                            <select onChange={(e)=>{testing(e.target.value)}} style={{width: "450px"}}>
                                 {drugsearch.filter(el=>el.active_ingredients).map(sx=>{
-                                    return <option value={sx.product_ndc}>{sx.product_ndc}</option>
+                                    return <option value={sx.product_ndc}>{sx.product_ndc} {sx.pharm_class}</option>
                                 })}
                             </select>
                     </Form.Group>
