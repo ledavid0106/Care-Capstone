@@ -36,22 +36,16 @@ const AddNewRx = ({getAllRx}) => {
     const [inputSearch, setInputSearch] = useState('');
     const [interactionList, setInteractionList] = useState([])
  
-//   console.log("user",user)
-
     let displayalert = ""
-    const struggle = []
     useEffect(() => {
         axios
             .get("http://127.0.0.1:8000/api/patient_profile/all/",
                 {headers: {Authorization: "Bearer " + token,}})
             .then(response=> {
-                // console.log(response.data)
                 setpatients(response.data)
                 setIsError(false)
-                // console.log(patients)
             })
             .catch(error=>{
-                // console.log(error)
                 setIsError(true)
                 setIsLoading(false)
             })
@@ -61,12 +55,10 @@ const AddNewRx = ({getAllRx}) => {
         axios
             .get(`https://api.fda.gov/drug/ndc.json?search=generic_name:"${drugsearch1}"&limit=20`)
             .then(response=> { 
-                console.log(response.data.results[0].pharm_class)
                 setDrugSearch(response.data.results)
                 setIsError(false)
             })
             .catch(error=>{
-                // console.log(error)
                 setIsError(true)
                 setIsLoading(false)
             })   
@@ -76,7 +68,6 @@ const AddNewRx = ({getAllRx}) => {
         setNdc(gimme)
         theInteractions(gimme)
     }
-
 
     async function addRx(Rx) {
         const response = await axios.post(`http://127.0.0.1:8000/api/prescription/`, 
@@ -90,7 +81,6 @@ const AddNewRx = ({getAllRx}) => {
 
     async function theHandler(info){
         let filpt = patients.filter(e=>e.id==info)[0]
-        // console.log(filpt)
         setpatient_ID(filpt.id)
         setPatient_first_name(filpt.first_name)
         setPatient_middle_name(filpt.middle_name)
@@ -99,47 +89,29 @@ const AddNewRx = ({getAllRx}) => {
     }
 
     async function theInteractions(info){
-        // let list = patients.filter(e=>e.id==patient_id)[0]
-        // console.log("list",list)
         const response = await axios.get(`http://127.0.0.1:8000/api/prescription/all/`,
                                         {headers: {Authorization: "Bearer " + token,}})
-        // console.log(response.data)
         let filtered = response.data.filter(e=>e.patient.id==patient_id)
-        // console.log(filtered)
-        // const ndclist = [info]
-        // const ndcblank = []
-        console.log("struggle",struggle)
         let ndcblank = [info]
-        console.log("blank",ndcblank)
         filtered.map(pt=>{
             ndcblank.push(pt.ndc)
-            // console.log("filtered",pt.ndc)
         })
         let rxcuilist = []
         for (let i = 0; i<ndcblank.length; i++) {
-            // console.log("ndc",ndclist[i])
             const findrxcui = await axios.get(`https://api.fda.gov/drug/ndc.json?search=product_ndc:"${ndcblank[i]}"&limit=1`)
             for (let y = 0; y<findrxcui.data.results[0].openfda.rxcui.length; y++){
-                // console.log('rxcui',findrxcui.data.results[0].openfda.rxcui)
                 rxcuilist.push(findrxcui.data.results[0].openfda.rxcui[y])
             }
         }
-        console.log("rxcuilist",rxcuilist)
         let druglist = `${rxcuilist[0]}`
         for (let z=1; z<rxcuilist.length; z++) {
             druglist+=`+${rxcuilist[z]}`
         }
-        console.log('Beginning')
-        console.log("druglist",druglist)
-        let testing = "207106+152923+656659"
+        // let testing = "207106+152923+656659"
         const findinteractions = await axios.get(` https://rxnav.nlm.nih.gov/REST/interaction/list.json?rxcuis=${druglist}`)
         let definelist = []
         definelist = findinteractions.data.fullInteractionTypeGroup[0].fullInteractionType
-        console.log('definelist1',definelist)
-        const interactlist = []
         for (let q = 0; q <definelist.length; q++){
-            // console.log("define1",definelist[q].interactionPair[0].severity)
-            // console.log("define1",definelist[q].interactionPair[0].description)   
             displayalert += 
                     `\nDrugs: ${definelist[q].interactionPair[0].interactionConcept[0].minConceptItem.name} and ${definelist[q].interactionPair[0].interactionConcept[1].minConceptItem.name} \nSeverity: ${definelist[q].interactionPair[0].severity} \nDescription: ${definelist[q].interactionPair[0].description}
                     `         
@@ -151,11 +123,9 @@ const AddNewRx = ({getAllRx}) => {
                 }   
             }
         }
-        console.log("display",displayalert)
         let definelist2 = []
         if (findinteractions.data.fullInteractionTypeGroup.length > 1){
             definelist2 = findinteractions.data.fullInteractionTypeGroup[1].fullInteractionType
-            const interactlist2 = []
             for (let r = 0; r<definelist2.length; r++){
                 console.log("define2",definelist2[r].interactionPair[0])
                 console.log("define3",definelist2[r].interactionPair[0].description)
@@ -166,11 +136,9 @@ const AddNewRx = ({getAllRx}) => {
             for (let e = 0; e<definelist2.length; e++){
                 if (definelist2[e].interactionPair[0].severity != "N/A") {
                 alert(`\nDrugs: ${definelist2[e].interactionPair[0].interactionConcept[0].minConceptItem.name} and ${definelist2[e].interactionPair[0].interactionConcept[1].minConceptItem.name} \nSeverity: ${definelist2[e].interactionPair[0].severity} \nDescription: ${definelist2[e].interactionPair[0].description}
-                `)    
-            }
+                `)}
             }
         }
-
         alert(displayalert)
     }
     const handleSubmit = () => {
@@ -229,8 +197,6 @@ const AddNewRx = ({getAllRx}) => {
                     <div>
                         <label> Drug Search <input type='text' onChange={(e) => getdrug(e.target.value)} ></input></label>
                     </div>
-                        {/* <label> Pharm Class:</label> */}
-                        {/* <h5>{drugsearch[0].pharm_class[0]}</h5> */}
                         <Form.Label>Medication Generic Name</Form.Label>
                             <select onChange={(e)=>{setGeneric_name(e.target.value)}} style={{width: "450px"}}>
                                 {drugsearch.filter(el=>el.active_ingredients).map(sx=>{
@@ -246,7 +212,6 @@ const AddNewRx = ({getAllRx}) => {
                                 })}
                             </select>
                     </Form.Group>
-                    {/* <button type="button" onClick={theInteractions}>Check for Interactions</button> */}
                     <Form.Group  className = 'mb-3' >
                         <Form.Label>Dosage</Form.Label>
                         <Form.Control type = 'string' value = {dosage} onChange = {(e)=> setDosage(e.target.value)}/> 
