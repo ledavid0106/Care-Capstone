@@ -31,7 +31,7 @@ const PatientResults = () => {
         <div className="home">
             <div className="plswork"><AddNewPatient/></div>
             <table className="table table-dark table-bordered table-hover table-striped">
-                <thead>
+                <thead className="table-primary">
                     
                     <tr className="trow">
                         <th>Patient ID</th>

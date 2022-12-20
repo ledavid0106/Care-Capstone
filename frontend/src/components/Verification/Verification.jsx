@@ -38,7 +38,7 @@ const VerificationProcess = () => {
         <div className="bigbigtable">
             <div > <h2 className="rx">Unverified Prescriptions</h2>
                 <table className="table table-dark table-stdiped table-bordered table-hover ">
-                    <thead>
+                    <thead className="table-primary">
                         <tr>
                             <th>Verify</th>
                             <th>RxID</th>
@@ -74,7 +74,7 @@ const VerificationProcess = () => {
             </div>
             <div> <h2 className="prod">Unverified Production</h2>
             <table className="table table-dark table-striped table-bordered table-hover ">
-                <thead >
+                <thead className="table-primary">
                     <tr>
                         <th style={{textAlign: "center"}}>Verify</th>
                         <th>Production ID</th>

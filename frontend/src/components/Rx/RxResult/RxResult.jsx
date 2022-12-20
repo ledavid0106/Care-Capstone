@@ -22,7 +22,7 @@ const RxResult = ({prescription, setPrescription}) => {
             <AddNewRx getAllRx={getAllRx} />   
         </div>
         <table className="table table-dark table-striped table-bordered table-hover ">
-            <thead>
+            <thead className="table-primary">
                 <tr>
                     <th>RxID</th>
                     <th>Active Status</th>
