@@ -35,8 +35,9 @@ const AddNewRx = ({getAllRx}) => {
     const [drugsearch, setDrugSearch] = useState([])
     const [inputSearch, setInputSearch] = useState('');
     const [interactionList, setInteractionList] = useState([])
- 
+    const struggle = []
     let displayalert = ""
+
     useEffect(() => {
         axios
             .get("http://127.0.0.1:8000/api/patient_profile/all/",
@@ -93,6 +94,7 @@ const AddNewRx = ({getAllRx}) => {
                                         {headers: {Authorization: "Bearer " + token,}})
         let filtered = response.data.filter(e=>e.patient.id==patient_id)
         let ndcblank = [info]
+        const ndclist = [info]
         filtered.map(pt=>{
             ndcblank.push(pt.ndc)
         })
@@ -111,6 +113,7 @@ const AddNewRx = ({getAllRx}) => {
         const findinteractions = await axios.get(` https://rxnav.nlm.nih.gov/REST/interaction/list.json?rxcuis=${druglist}`)
         let definelist = []
         definelist = findinteractions.data.fullInteractionTypeGroup[0].fullInteractionType
+        const interactlist = []
         for (let q = 0; q <definelist.length; q++){
             displayalert += 
                     `\nDrugs: ${definelist[q].interactionPair[0].interactionConcept[0].minConceptItem.name} and ${definelist[q].interactionPair[0].interactionConcept[1].minConceptItem.name} \nSeverity: ${definelist[q].interactionPair[0].severity} \nDescription: ${definelist[q].interactionPair[0].description}
@@ -126,6 +129,7 @@ const AddNewRx = ({getAllRx}) => {
         let definelist2 = []
         if (findinteractions.data.fullInteractionTypeGroup.length > 1){
             definelist2 = findinteractions.data.fullInteractionTypeGroup[1].fullInteractionType
+            const interactlist2 = []
             for (let r = 0; r<definelist2.length; r++){
                 console.log("define2",definelist2[r].interactionPair[0])
                 console.log("define3",definelist2[r].interactionPair[0].description)
@@ -137,9 +141,11 @@ const AddNewRx = ({getAllRx}) => {
                 if (definelist2[e].interactionPair[0].severity != "N/A") {
                 alert(`\nDrugs: ${definelist2[e].interactionPair[0].interactionConcept[0].minConceptItem.name} and ${definelist2[e].interactionPair[0].interactionConcept[1].minConceptItem.name} \nSeverity: ${definelist2[e].interactionPair[0].severity} \nDescription: ${definelist2[e].interactionPair[0].description}
                 `)}
+                break
             }
         }
         alert(displayalert)
+        
     }
     const handleSubmit = () => {
         const newRx = {active:active, patient_id:patient_id ,patient_first_name:patient_first_name, 
