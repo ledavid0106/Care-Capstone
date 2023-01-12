@@ -63,7 +63,7 @@ const VerifyProdButton = ({production}) => {
 
     return ( 
         <>
-            <button onClick={handleShow} className="buto">Verify</button>
+            <button onClick={handleShow} className="btn btn-success" style={{width: "100%"}}>Verify</button>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Enter Your Initials to Verify</Modal.Title>
