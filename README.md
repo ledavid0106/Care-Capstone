@@ -1,1 +1,3 @@
-# Care-Capstone
+Welcome to Care Capstone!
+
+To provide a little bit of background, I had been previously working in the hospital in the Pharmacy Department. During my time there, I noticed that some of the technologies that we used were quite out of date such as using excel sheets to keep track/records of things made in the pharmacy. Thus, I wanted to create something to fix that issue which is exactly what the Care Capstone does and much more! It is able to keep record of patients, prescriptions, productions, and verifications! On top of this, it can also look for any interactions that the prescription may have with a certain patient's current list of medications and notify the user.

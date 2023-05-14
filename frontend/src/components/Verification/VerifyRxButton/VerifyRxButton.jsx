@@ -143,7 +143,7 @@ const VerifyRxButton = ({RxId}) => {
 
     return ( 
         <>
-            <button onClick={handleShow} className="bu">Verify</button>
+            <button onClick={handleShow} className="btn btn-success" style={{width: "100%", "background-color": "#3498db"}}>Verify</button>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Enter Your Initials to Verify</Modal.Title>
