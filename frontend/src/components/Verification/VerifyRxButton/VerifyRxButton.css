@@ -1,4 +1,11 @@
-.bu{
+/* .bu{
   padding-bottom: 150%;
 
+} */
+.bu{
+  width:100%;
+  padding: none;
+  margin: none;
+  border: none;
+  text-align: center;
 }
